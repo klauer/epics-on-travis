@@ -1,0 +1,39 @@
+language: python
+python:
+  - 3.6
+  - nightly
+
+env:
+  matrix:
+    - BASE=R3.14.12.6 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=R3-6-1 MOTOR=6-9
+    - BASE=R3.15.5 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=R3-6-1 MOTOR=6-9
+    # - BASE=R3.16.1 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=4aab3c4 MOTOR=6-9
+
+dist: trusty
+addons:
+  apt:
+    packages:
+      - libreadline6-dev  # epics build deps
+      - libncurses5-dev
+      - perl
+      - re2c
+      - tmux
+      - strace
+
+cache:
+  directories:
+    - $HOME/.cache/epics
+    - $HOME/.ccache  # https://github.com/travis-ci/travis-ci/issues/5853
+
+script:
+  - export PATH=/usr/lib/ccache:$PATH
+  - export EPICS_CA_ADDR_LIST=127.255.255.255
+  - export EPICS_CA_AUTO_ADDR_LIST=NO
+  - export EPICS_CA_MAX_ARRAY_BYTES=10000000
+  - source .ci/epics-config.sh
+  - bash .ci/install-epics-base.sh
+  - bash .ci/install-epics-modules.sh
+  - bash .ci/install-epics-iocs.sh
+  - bash .ci/run-epics-iocs.sh
+  # - pip install pyepics numpy
+  # - bash .ci/run-pyepics-simulator.sh
