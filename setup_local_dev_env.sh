@@ -1,4 +1,14 @@
-export EPICS_HOST_ARCH=linux-x86_64
+#!/bin/bash
+
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    export EPICS_HOST_ARCH=darwin-x86
+else
+    export EPICS_HOST_ARCH=linux-x86_64
+fi
+
+echo "EPICS_HOST_ARCH=$EPICS_HOST_ARCH"
+
 export EPICS_CA_ADDR_LIST=127.255.255.255
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_MAX_ARRAY_BYTES=10000000
@@ -7,9 +17,9 @@ export BASE=R3.14.12.6
 export BUSY=1-6-1
 export SEQ=2.2.5
 export ASYN=4-31
-export CALC=R3-6-1
+export CALC=3-6-1
 export MOTOR=6-9
 # mock Travis
 export TRAVIS_BUILD_DIR=${PWD}
-source ${TRAVIS_BUILD_DIR}/epics-config.sh
 export CI_SCRIPTS=${TRAVIS_BUILD_DIR}/ci-scripts
+source ${CI_SCRIPTS}/epics-config.sh

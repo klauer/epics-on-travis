@@ -2,8 +2,8 @@ language: cpp
 
 env:
   matrix:
-    - BASE=R3.14.12.6 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=R3-6-1 MOTOR=6-9
-    - BASE=R3.15.5 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=R3-6-1 MOTOR=6-9
+    - BASE=R3.14.12.6 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-6-1 MOTOR=6-9
+    - BASE=R3.15.5 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-6-1 MOTOR=6-9
     # - BASE=R3.16.1 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=4aab3c4 MOTOR=6-9
 
 dist: trusty
@@ -26,14 +26,14 @@ script:
   - export CI_SCRIPTS="${TRAVIS_BUILD_DIR}/ci-scripts"
   - source "${CI_SCRIPTS}/epics-config.sh"
   - bash "${CI_SCRIPTS}/install-epics-base.sh"
-  # - bash "${CI_SCRIPTS}/install-epics-modules.sh"
+  - bash "${CI_SCRIPTS}/install-epics-modules.sh"
   # - bash "${CI_SCRIPTS}/install-epics-iocs.sh"
   # - bash "${CI_SCRIPTS}/run-epics-iocs.sh"
   # - pip install pyepics numpy
   # - bash ${CI_SCRIPTS}/run-pyepics-simulator.sh
   - export VERSION_TAG=${BASE}_busy${BUSY}_seq${SEQ}_asyn${ASYN}_calc${CALC}_motor${MOTOR}
   - export FILE_TO_UPLOAD="${TRAVIS_BUILD_DIR}/epics-ci-${VERSION_TAG}.tar.bz2"
-  - tar cvfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} 
+  - tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} 
 
 deploy:
     provider: releases

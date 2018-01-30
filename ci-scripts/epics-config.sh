@@ -2,12 +2,15 @@ export EPICS_CA_ADDR_LIST=127.255.255.255
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_MAX_ARRAY_BYTES=10000000
 
+export BUILD_ROOT=$HOME/build/epics/${BASE}
 export EPICS_ROOT=$HOME/.cache/epics/${BASE}
 export SUPPORT=${EPICS_ROOT}/support
 export IOCS=${EPICS_ROOT}/iocs
 export EPICS_BASE=${EPICS_ROOT}/base
 export RELEASE_PATH=${SUPPORT}/RELEASE
-export EPICS_HOST_ARCH=linux-x86_64
+if [ -z "$EPICS_HOST_ARCH" ]; then
+    export EPICS_HOST_ARCH=linux-x86_64
+fi
 
 export PYEPICS_IOC="$IOCS/pyepics-test-ioc"
 export PYEPICS_IOC_PIPE="${IOCS}/pyepics_ioc_pipe"

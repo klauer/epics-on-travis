@@ -3,17 +3,18 @@ set -e -x
 
 source $CI_SCRIPTS/epics-config.sh
 
-if [ ! -e "$EPICS_BASE/built" ]
-then
+build_epics_base() {
+    BUILD_DIR=$BUILD_ROOT/base
+    mkdir -p $BUILD_DIR
 
-    git clone https://github.com/epics-base/epics-base.git $EPICS_BASE
-    ( cd $EPICS_BASE && git checkout $BASE );
+    git clone --depth=10 --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
+    ( cd $BUILD_DIR && git checkout $BASE );
 
-    EPICS_HOST_ARCH=`sh $EPICS_BASE/startup/EpicsHostArch`
+    EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
 
     case "$STATIC" in
     static)
-        cat << EOF >> "$EPICS_BASE/configure/CONFIG_SITE"
+        cat << EOF >> "$BUILD_DIR/configure/CONFIG_SITE"
 SHARED_LIBRARIES=NO
 STATIC_BUILD=YES
 EOF
@@ -21,24 +22,32 @@ EOF
     *) ;;
     esac
 
-    make -C "$EPICS_BASE" -j$(expr $(nproc) + 1)
+    make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
+
     # get MSI for 3.14
     case "$BASE" in
-    3.14*)
+    R3.14*)
         echo "Build MSI"
-        install -d "$HOME/msi/extensions/src"
-        curl https://github.com/epics-extensions/extensions/archive/extensions_20120904.tar.gz | tar -C "$HOME/msi" -xvz
-        curl https://epics.anl.gov/download/extensions/msi1-7.tar.gz | tar -C "$HOME/msi/extensions/src" -xvz
-        mv "$HOME/msi/extensions/src/msi1-7" "$HOME/msi/extensions/src/msi"
+        MSI_BUILD_DIR=$BUILD_ROOT/msi
+        install -d "$MSI_BUILD_DIR/extensions/src"
+        curl -L https://github.com/epics-extensions/extensions/archive/extensions_20120904.tar.gz | tar --strip-components 1 -C "$MSI_BUILD_DIR/extensions" -xvz
+        curl https://epics.anl.gov/download/extensions/msi1-7.tar.gz | tar -C "$MSI_BUILD_DIR/extensions/src" -xvz
+        mv "$MSI_BUILD_DIR/extensions/src/msi1-7" "$MSI_BUILD_DIR/extensions/src/msi"
 
-        cat << EOF > "$HOME/msi/extensions/configure/RELEASE"
+        cat << EOF > "$MSI_BUILD_DIR/extensions/configure/RELEASE"
 EPICS_BASE=$EPICS_BASE
 EPICS_EXTENSIONS=\$(TOP)
 EOF
-        make -C "$HOME/msi/extensions"
-        cp "$HOME/msi/extensions/bin/$EPICS_HOST_ARCH/msi" "$EPICS_BASE/bin/$EPICS_HOST_ARCH/"
-        echo 'MSI:=$(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)/msi' >> "$EPICS_BASE/configure/CONFIG_SITE"
+        make -C "$MSI_BUILD_DIR/extensions"
 
+        bin_path="$EPICS_BASE/bin/$EPICS_HOST_ARCH/"
+        chmod u+w $bin_path
+        cp "$MSI_BUILD_DIR/extensions/bin/$EPICS_HOST_ARCH/msi" $bin_path
+
+        chmod u+w "$EPICS_BASE/configure/CONFIG_SITE"
+        echo 'MSI:=$(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)/msi' >> "$EPICS_BASE/configure/CONFIG_SITE"
+        
+        # TODO: correct config_site?
         cat <<EOF >> ${EPICS_BASE}/CONFIG_SITE
 MSI = \$(EPICS_BASE)/bin/\$(EPICS_HOST_ARCH)/msi
 EOF
@@ -48,8 +57,14 @@ EOF
       ;;
     esac
     
-    make -C "$EPICS_BASE" clean
+    make -C "$BUILD_DIR" INSTALL_LOCATION=$EPICS_BASE
     touch $EPICS_BASE/built
+}
+
+
+if [ ! -e "$EPICS_BASE/built" ]
+then
+    build_epics_base
 else
     echo "Using cached epics-base!"
 fi
