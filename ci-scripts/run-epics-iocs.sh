@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e -x
 
-source $TRAVIS_BUILD_DIR/epics-config.sh
+source $CI_SCRIPTS/epics-config.sh
 
 export PYEPICS_PID=0
 

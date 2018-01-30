@@ -3,7 +3,7 @@ set -e -x
 
 export EPICS_TMUX_SESSION=IOCs
 
-source $TRAVIS_BUILD_DIR/epics-config.sh
+source $CI_SCRIPTS/epics-config.sh
 
 echo "Starting a new tmux session '${EPICS_TMUX_SESSION}'"
 tmux new-session -d -s ${EPICS_TMUX_SESSION} /bin/bash

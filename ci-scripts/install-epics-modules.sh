@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e -x
 
-source $TRAVIS_BUILD_DIR/epics-config.sh
+source $CI_SCRIPTS/epics-config.sh
 
 [ -z "$EPICS_BASE" ] && echo "EPICS_BASE unset" && exit 1;
 [ -z "$SUPPORT" ] && echo "SUPPORT unset" && exit 1;
