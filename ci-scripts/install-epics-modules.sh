@@ -26,7 +26,7 @@ if [ ! -e "$SUPPORT/asyn/built" ]; then
     install -d $SUPPORT/asyn
     curl -L "https://github.com/epics-modules/asyn/archive/R${ASYN}.tar.gz" | tar -C $SUPPORT/asyn -xvz --strip-components=1
     cp $RELEASE_PATH $SUPPORT/asyn/configure/RELEASE
-    make -C "$SUPPORT/asyn" -j2
+    make -C "$SUPPORT/asyn" all clean
     touch $SUPPORT/asyn/built
 else
     echo "Using cached asyn"
@@ -39,7 +39,7 @@ if [ ! -e "$SUPPORT/busy/built" ]; then
     install -d $SUPPORT/busy
     curl -L "https://github.com/epics-modules/busy/archive/R${BUSY}.tar.gz" | tar -C $SUPPORT/busy -xvz --strip-components=1
     cp $RELEASE_PATH $SUPPORT/busy/configure/RELEASE
-    make -C $SUPPORT/busy
+    make -C $SUPPORT/busy all clean
     touch $SUPPORT/busy/built
 else
     echo "Using cached busy"
@@ -53,7 +53,7 @@ if [ ! -e "$SUPPORT/calc/built" ]; then
     git clone https://github.com/epics-modules/calc ${SUPPORT}/calc
     ( cd ${SUPPORT}/calc && git checkout ${CALC} )
     cp $RELEASE_PATH $SUPPORT/calc/configure/RELEASE
-    make -C "$SUPPORT/calc" -j2
+    make -C "$SUPPORT/calc" all clean
     touch $SUPPORT/calc/built
 else
     echo "Using cached calc"
@@ -84,6 +84,7 @@ include $(TOP)/configure/RULES_DIRS
 EOF
     fi
     make -C "$SUPPORT/motor" -j2
+    make -C "$SUPPORT/motor" clean
     touch $SUPPORT/motor/built
 else
     echo "Using cached motor"

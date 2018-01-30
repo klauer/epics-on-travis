@@ -47,7 +47,8 @@ EOF
     *) echo "Use MSI from Base"
       ;;
     esac
-
+    
+    make -C "$EPICS_BASE" clean
     touch $EPICS_BASE/built
 else
     echo "Using cached epics-base!"
