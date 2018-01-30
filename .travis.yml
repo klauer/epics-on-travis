@@ -26,8 +26,20 @@ script:
   - export CI_SCRIPTS="${TRAVIS_BUILD_DIR}/ci-scripts"
   - source "${CI_SCRIPTS}/epics-config.sh"
   - bash "${CI_SCRIPTS}/install-epics-base.sh"
-  - bash "${CI_SCRIPTS}/install-epics-modules.sh"
-  - bash "${CI_SCRIPTS}/install-epics-iocs.sh"
-  - bash "${CI_SCRIPTS}/run-epics-iocs.sh"
+  # - bash "${CI_SCRIPTS}/install-epics-modules.sh"
+  # - bash "${CI_SCRIPTS}/install-epics-iocs.sh"
+  # - bash "${CI_SCRIPTS}/run-epics-iocs.sh"
   # - pip install pyepics numpy
   # - bash ${CI_SCRIPTS}/run-pyepics-simulator.sh
+  - export VERSION_TAG=${BASE}_busy${BUSY}_seq${SEQ}_asyn${ASYN}_calc${CALC}_motor${MOTOR}
+  - export FILE_TO_UPLOAD="${TRAVIS_BUILD_DIR}/epics-ci-${VERSION_TAG}.tar.bz2"
+  - tar cvfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} 
+
+deploy:
+    provider: releases
+    api_key: $GITHUB_OAUTH_TOKEN
+    skip_cleanup: true
+    file_glob: true
+    file: "${FILE_TO_UPLOAD}"
+    on:
+      tags: true
