@@ -1,4 +1,24 @@
 #!/bin/bash
+
+install_from_github_archive() {
+    archive_url=$1
+    package_name=$2
+    build_path=$3
+    install_path=$4
+
+    if [ ! -e "$install_path/built" ]; then
+        echo "Build $package_name"
+        install -d $build_path
+        curl -L "${archive_url}" | tar -C $build_path -xvz --strip-components=1
+        cp $RELEASE_PATH $build_path/configure/RELEASE
+        make -C "$build_path" INSTALL_LOCATION=$install_path
+        touch $install_path/built
+    else
+        echo "Using cached $package_name"
+    fi
+    
+}
+
 set -e -x
 
 source $CI_SCRIPTS/epics-config.sh
@@ -21,16 +41,10 @@ source $CI_SCRIPTS/epics-config.sh
 
 
 # asyn
-if [ ! -e "$SUPPORT/asyn/built" ]; then
-    echo "Build asyn"
-    install -d $SUPPORT/asyn
-    curl -L "https://github.com/epics-modules/asyn/archive/R${ASYN}.tar.gz" | tar -C $SUPPORT/asyn -xvz --strip-components=1
-    cp $RELEASE_PATH $SUPPORT/asyn/configure/RELEASE
-    make -C "$SUPPORT/asyn" all clean
-    touch $SUPPORT/asyn/built
-else
-    echo "Using cached asyn"
-fi
+install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN}.tar.gz" "asyn" \
+    "$BUILD_ROOT/asyn" "$SUPPORT/asyn"
+
+exit 0
 
 
 # busy

@@ -11,5 +11,5 @@ export CALC=R3-6-1
 export MOTOR=6-9
 # mock Travis
 export TRAVIS_BUILD_DIR=${PWD}
-source ${TRAVIS_BUILD_DIR}/epics-config.sh
 export CI_SCRIPTS=${TRAVIS_BUILD_DIR}/ci-scripts
+source ${CI_SCRIPTS}/epics-config.sh
