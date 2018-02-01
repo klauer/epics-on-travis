@@ -15,7 +15,10 @@ fix_pyepics() {
 pyepics_build_path="${BUILD_ROOT}/pyepics-testioc"
 install_from_git "https://github.com/pyepics/testioc.git" "pyepics-testioc" \
     "$pyepics_build_path" "${PYEPICS_IOC}" "master" fix_pyepics
-cp -R "$pyepics_build_path/simulator.py" "$pyepics_build_path/iocBoot" "${PYEPICS_IOC}"
+
+if [ -f "$pyepics_build_path/simulator.py" ]; then
+    cp -R "$pyepics_build_path/simulator.py" "$pyepics_build_path/iocBoot" "${PYEPICS_IOC}"
+fi
 
 
 # -- motorsim --
@@ -30,4 +33,6 @@ motorsim_build_path="${BUILD_ROOT}/motorsim-ioc"
 
 install_from_git "https://github.com/klauer/motorsim.git" "motorsim" \
     "$motorsim_build_path" "${MOTORSIM_IOC}" "homebrew-epics" fix_motorsim
-cp -R "$motorsim_build_path/iocBoot" "${MOTORSIM_IOC}"
+if [ -d "$motorsim_build_path/iocBoot" ]; then
+    cp -R "$motorsim_build_path/iocBoot" "${MOTORSIM_IOC}"
+fi
