@@ -25,7 +25,7 @@ install_from_github_archive() {
 }
 
 install_from_git() {
-    local archive_url=$1
+    local git_url=$1
     local package_name=$2
     local build_path=$3
     local install_path=$4
