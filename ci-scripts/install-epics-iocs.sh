@@ -15,7 +15,7 @@ fix_pyepics() {
 }
 install_from_git "https://github.com/pyepics/testioc.git" "pyepics-testioc" \
     "$pyepics_build_path" "${PYEPICS_IOC}" "master" fix_pyepics
-cp -R "$pyepics_build_path/iocBoot" "${PYEPICS_IOC}"
+cp -R "$pyepics_build_path/simulator.py" "$pyepics_build_path/iocBoot" "${PYEPICS_IOC}"
 
 motorsim_build_path="${BUILD_ROOT}/motorsim-ioc"
 
