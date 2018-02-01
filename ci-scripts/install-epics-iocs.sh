@@ -5,34 +5,26 @@ source $CI_SCRIPTS/epics-config.sh
 
 # -- pyepics test ioc --
 
-if [ ! -e "${PYEPICS_IOC}/built" ]; then
-    echo "Build pyepics test IOC"
-    install -d $PYEPICS_IOC
-    git clone --depth 10 --branch master https://github.com/pyepics/testioc.git ${PYEPICS_IOC}
-    cp ${RELEASE_PATH} ${PYEPICS_IOC}/configure/RELEASE
+pyepics_build_path="${BUILD_ROOT}/pyepics-testioc"
+
+fix_pyepics() {
     # no sscan support for now
-    sed -ie "s/^.*sscan.*$//" ${PYEPICS_IOC}/testiocApp/src/Makefile
+    sed -ie "s/^.*sscan.*$//" $pyepics_build_path/testiocApp/src/Makefile
     # # it's late and sequencer+calc is giving issues...
-    # sed -ie "s/^SNCSEQ.*$//" ${PYEPICS_IOC}/configure/RELEASE
-    make -C ${PYEPICS_IOC}
-    touch ${PYEPICS_IOC}/built
-else
-    echo "Using cached pyepics test IOC"
-fi
+    # sed -ie "s/^SNCSEQ.*$//" $pyepics_build_path/configure/RELEASE
+}
+install_from_git "https://github.com/pyepics/testioc.git" "pyepics-testioc" \
+    "$pyepics_build_path" "${PYEPICS_IOC}" "master" fix_pyepics
+cp -R "$pyepics_build_path/iocBoot" "${PYEPICS_IOC}"
 
-# -- motorsim ioc --
+motorsim_build_path="${BUILD_ROOT}/motorsim-ioc"
 
-if [ ! -e "${MOTORSIM_IOC}/built" ]; then
-    echo "Build motorsim IOC"
-    install -d $MOTORSIM_IOC
-    git clone --depth 10 --branch homebrew-epics https://github.com/klauer/motorsim.git ${MOTORSIM_IOC}
-    cp ${RELEASE_PATH} ${MOTORSIM_IOC}/configure/RELEASE
-    # no autosave support for now
-    sed -ie "s/^.*asSupport.*$//" ${MOTORSIM_IOC}/motorSimApp/src/Makefile
-    sed -ie "s/autosave //" ${MOTORSIM_IOC}/motorSimApp/src/Makefile
-    sed -ie "s/^ARCH.*$/ARCH=${EPICS_HOST_ARCH}/" ${MOTORSIM_IOC}/iocBoot/ioclocalhost/Makefile
-    make -C ${MOTORSIM_IOC}
-    touch ${MOTORSIM_IOC}/built
-else
-    echo "Using cached motorsim IOC"
-fi
+fix_motorsim() {
+    sed -ie "s/^.*asSupport.*$//" ${motorsim_build_path}/motorSimApp/src/Makefile
+    sed -ie "s/autosave //" ${motorsim_build_path}/motorSimApp/src/Makefile
+    sed -ie "s/^ARCH.*$/ARCH=${EPICS_HOST_ARCH}/" ${motorsim_build_path}/iocBoot/ioclocalhost/Makefile
+}
+
+install_from_git "https://github.com/klauer/motorsim.git" "motorsim" \
+    "$motorsim_build_path" "${MOTORSIM_IOC}" "homebrew-epics" fix_motorsim
+cp -R "$motorsim_build_path/iocBoot" "${MOTORSIM_IOC}"
