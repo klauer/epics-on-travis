@@ -43,4 +43,4 @@ fi
 export PYEPICS_LIBCA=${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libca.so
 
 # include utility functions for other scripts
-. ${CI_SCRIPTS}/build-util.sh
+. ${CI_SCRIPTS}/utils.sh
