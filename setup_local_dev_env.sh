@@ -1,5 +1,6 @@
 #!/bin/bash
-
+#
+# Usage: setup_local_dev_env.sh [--submodule]
 
 if [[ "$(uname)" == "Darwin" ]]; then
     export EPICS_HOST_ARCH=darwin-x86
@@ -19,7 +20,8 @@ export SEQ=2.2.5
 export ASYN=4-31
 export CALC=3-6-1
 export MOTOR=6-9
+
 # mock Travis
 export TRAVIS_BUILD_DIR=${PWD}
-export CI_SCRIPTS=${TRAVIS_BUILD_DIR}/ci-scripts
+export CI_SCRIPTS=${PWD}/ci-scripts
 source ${CI_SCRIPTS}/epics-config.sh
