@@ -6,12 +6,12 @@
 # initial prefix (and thus requires stripping of the first 3 components with
 # tar)
 
+full_package_url=$1
+
 if [ -z "$full_package_url" ]; then
     echo "Usage: $0 [full_package_url]"
     exit 1
 fi
-
-full_package_url=$1
 
 echo "Downloading from: $full_package_url"
 curl -L ${full_package_url} | tar -C $HOME/.cache -xvj --strip-components=3
