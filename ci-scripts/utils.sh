@@ -1,5 +1,11 @@
 #!/bin/bash
 
+download_and_extract() {
+    url=$1
+    destination=$2
+    curl -L "$url" | tar -C $destination -xvz --strip-components=1
+}
+
 install_from_github_archive() {
     local archive_url=$1
     local package_name=$2
@@ -10,10 +16,12 @@ install_from_github_archive() {
     if [ ! -e "$install_path/built" ]; then
         echo "Download $package_name"
         install -d $build_path
-        curl -L "${archive_url}" | tar -C $build_path -xvz --strip-components=1
+        download_and_extract "$archive_url" "$build_path"
         cp $RELEASE_PATH $build_path/configure/RELEASE
         if [ ! -z "$fix_step" ]; then
+            pushd $build_path
             $fix_step;
+            popd
         fi
         echo "Build $package_name"
         make -C "$build_path" INSTALL_LOCATION=$install_path

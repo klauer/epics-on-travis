@@ -14,12 +14,16 @@ export EPICS_CA_ADDR_LIST=127.255.255.255
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_MAX_ARRAY_BYTES=10000000
 # example build matrix variables
+# export BASE=R3.15.5
 export BASE=R3.14.12.6
 export BUSY=1-6-1
 export SEQ=2.2.5
-export ASYN=4-31
+export ASYN=4-32
 export CALC=3-6-1
 export MOTOR=6-9
+export AUTOSAVE=5-9
+export SSCAN=2-11-1
+export AREADETECTOR=3-2
 
 # mock Travis
 export TRAVIS_BUILD_DIR=${PWD}

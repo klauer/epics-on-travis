@@ -2,20 +2,18 @@ language: cpp
 
 env:
   matrix:
-    - BASE=R3.14.12.6 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-6-1 MOTOR=6-9
-    - BASE=R3.15.5 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-6-1 MOTOR=6-9
-    - BASE=R3.16.1 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-7 MOTOR=6-10
+    - BASE=R3.14.12.6 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-7 AUTOSAVE=5-9 SSCAN=2-11-1 MOTOR=6-9 AREADETECTOR=3-2
+    - BASE=R3.15.5 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-7 AUTOSAVE=5-9 SSCAN=2-11-1 MOTOR=6-9 AREADETECTOR=3-2
+    - BASE=R3.16.1 BUSY=1-6-1 SEQ=2.2.5 ASYN=4-31 CALC=3-7 AUTOSAVE=5-9 SSCAN=2-11-1 MOTOR=6-10 AREADETECTOR=3-2
 
 dist: trusty
 addons:
   apt:
     packages:
-      - libreadline6-dev  # epics build deps
+      - libreadline6-dev
       - libncurses5-dev
       - perl
       - re2c
-      - tmux
-      - strace
 
 cache:
   directories:
