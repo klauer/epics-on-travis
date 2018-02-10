@@ -20,6 +20,7 @@ fix_areadetector() {
     fi
     
     chmod a+rw configure/*
+    chmod a-w configure/CONFIG_SITE
 
     # RELEASE
     # Restore the original release file (installed by our bash scripts)
@@ -113,12 +114,15 @@ EOF
     if [ ! -d ADSupport/configure ]; then
         git clone --depth=1 --branch=master https://github.com/areaDetector/ADSupport.git
     fi
+    
+    # ADSupport/configure/CONFIG_SITE
+    echo "CHECK_RELEASE=YES" > ADSupport/configure/CONFIG_SITE
 
-    # ADSupport/RELEASE.arch.Common
+    # ADSupport/configure/RELEASE.arch.Common
     echo "EPICS_BASE=$EPICS_BASE" > ADSupport/configure/RELEASE.$EPICS_HOST_ARCH.Common
 
     # Copy the same config site file generated above for ADSupport
-    # ADSupport/CONFIG_SITE.arch.Common
+    # ADSupport/configure/CONFIG_SITE.arch.Common
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
     # make -C ADSupport
 }
