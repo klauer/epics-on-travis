@@ -119,6 +119,12 @@ EOF
     # ADSupport/configure/CONFIG_SITE
     echo "CHECK_RELEASE=YES" > ADSupport/configure/CONFIG_SITE
 
+    # ADCore/configure/CONFIG_SITE
+    echo "CHECK_RELEASE=YES" > ADCore/configure/CONFIG_SITE
+
+    # ADSimDetector/configure/CONFIG_SITE
+    echo "CHECK_RELEASE=YES" > ADSimDetector/configure/CONFIG_SITE
+
     # ADSupport/configure/RELEASE.arch.Common
     echo "EPICS_BASE=$EPICS_BASE" > ADSupport/configure/RELEASE.$EPICS_HOST_ARCH.Common
 
