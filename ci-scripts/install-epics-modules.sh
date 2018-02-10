@@ -150,7 +150,7 @@ EOF
 
     # Copy the same config site file generated above for ADSupport
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
-    make -sj -C ADSupport
+    make -sj 2 -C ADSupport
 }
 
 # areadetector
