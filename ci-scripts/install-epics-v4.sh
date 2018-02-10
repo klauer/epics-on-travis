@@ -6,7 +6,7 @@ source $CI_SCRIPTS/epics-config.sh
 [ -z "$PVA" ] && echo "PVA unset" && exit 1;
 
 BUILD_DIR=$BUILD_ROOT/pva
-INSTALL_DIR=$SUPPORT/pva
+INSTALL_DIR=${PVA_PATH}
 
 if [ ! -e "$INSTALL_DIR/built" ]
 then
