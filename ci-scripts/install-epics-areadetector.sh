@@ -51,10 +51,10 @@ EOF
     
     if [[ ! -z "${PVA}" ]]; then 
         cat >> configure/RELEASE_LIBS.local <<EOF
-PVACCESS=${PVA_PATH}/pvAccess
-PVDATA=${PVA_PATH}/pvData
-PVDATABASE=${PVA_PATH}/pvDatabase
-NORMATIVETYPES=${PVA_PATH}/normativeTypes
+PVACCESS=${PVA_PATH}
+PVDATA=${PVA_PATH}
+PVDATABASE=${PVA_PATH}
+NORMATIVETYPES=${PVA_PATH}
 EOF
     fi
 
