@@ -38,7 +38,7 @@ script:
   # - pip install pyepics numpy
   # - bash ${CI_SCRIPTS}/run-pyepics-simulator.sh
 
-  - export VERSION_TAG=${BASE}_busy${BUSY}_seq${SEQ}_asyn${ASYN}_calc${CALC}_motor${MOTOR}
+  - export VERSION_TAG=${BASE}_pva${PVA}_areadetector${AREADETECTOR}_motor${MOTOR}
   - export FILE_TO_UPLOAD="${TRAVIS_BUILD_DIR}/epics-ci-${TRAVIS_TAG}_${VERSION_TAG}.tar.bz2"
   - tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} 
 
