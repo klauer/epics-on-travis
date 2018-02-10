@@ -70,6 +70,8 @@ fix_areadetector() {
         download_and_extract "https://github.com/areaDetector/ADSimDetector/archive/R2-7.tar.gz" ADSimDetector
     fi
     
+    chmod a+rw configure/*
+
     # RELEASE
     # Restore the original release file (installed by our bash scripts)
     cat > configure/RELEASE <<'EOF'
