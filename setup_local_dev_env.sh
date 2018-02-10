@@ -26,10 +26,10 @@ export SSCAN=2-11-1
 export AREADETECTOR=3-2
 
 if [[ "$BASE" == R3.14* ]]; then
-    export V4=
+    export PVA=
     export WITH_PVA=NO
 else
-    export V4=4.7.0
+    export PVA=4.7.0
     export WITH_PVA=YES
 fi
 # mock Travis
