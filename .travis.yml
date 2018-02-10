@@ -28,6 +28,9 @@ script:
         bash "${CI_SCRIPTS}/install-epics-v4.sh"
     fi
   - bash "${CI_SCRIPTS}/install-epics-modules.sh"
+  - if [ ! -z "${AREADETECTOR}" ]; then
+        bash "${CI_SCRIPTS}/install-epics-areadetector.sh"
+    fi
   - bash "${CI_SCRIPTS}/install-epics-iocs.sh"
 
   # for projects using the pyepics test IOC and motorsim IOC:
