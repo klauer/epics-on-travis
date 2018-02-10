@@ -20,8 +20,7 @@ export MOTORSIM_IOC_PIPE="${IOCS}/motorsim_ioc_pipe"
 install -d $SUPPORT
 install -d $IOCS
 
-# if [ ! -f "$RELEASE_PATH" ]; then
-    cat << EOF > $RELEASE_PATH
+cat << EOF > $RELEASE_PATH
 SUPPORT=$SUPPORT
 SNCSEQ=$SUPPORT/seq
 AUTOSAVE=$SUPPORT/autosave
@@ -33,9 +32,15 @@ MOTOR=$SUPPORT/motor
 EPICS_BASE=$EPICS_BASE
 AREA_DETECTOR=$SUPPORT/areadetector
 EOF
-    echo "Created release file: ${RELEASE_PATH}"
-    cat $RELEASE_PATH
-# fi
+
+if [ ! -z "$V4" ]; then
+    cat << EOF >> $RELEASE_PATH
+PVA=$SUPPORT/pva
+EOF
+fi
+
+echo "Created release file: ${RELEASE_PATH}"
+cat $RELEASE_PATH
 
 EPICS_BIN_PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}"
 

@@ -20,10 +20,6 @@ install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${AS
 install_from_github_archive "https://github.com/epics-modules/busy/archive/R${BUSY}.tar.gz" "busy" \
     "$BUILD_ROOT/busy" "$SUPPORT/busy"
 
-# calc
-install_from_github_archive "https://github.com/epics-modules/calc/archive/R${CALC}.tar.gz" "calc" \
-    "$BUILD_ROOT/calc" "$SUPPORT/calc"
-
 # autosave
 install_from_github_archive "https://github.com/epics-modules/autosave/archive/R${AUTOSAVE}.tar.gz" "autosave" \
     "$BUILD_ROOT/autosave" "$SUPPORT/autosave"
@@ -31,6 +27,10 @@ install_from_github_archive "https://github.com/epics-modules/autosave/archive/R
 # sscan
 install_from_github_archive "https://github.com/epics-modules/sscan/archive/R${SSCAN}.tar.gz" "sscan" \
     "$BUILD_ROOT/sscan" "$SUPPORT/sscan"
+
+# calc
+install_from_github_archive "https://github.com/epics-modules/calc/archive/R${CALC}.tar.gz" "calc" \
+    "$BUILD_ROOT/calc" "$SUPPORT/calc"
 
 # motor
 motor_build_path=$BUILD_ROOT/motor
