@@ -3,7 +3,7 @@ set -e -x
 
 source $CI_SCRIPTS/epics-config.sh
 
-[ -z "$V4" ] && echo "V4 unset" && exit 1;
+[ -z "$PVA" ] && echo "PVA unset" && exit 1;
 
 BUILD_DIR=$BUILD_ROOT/pva
 INSTALL_DIR=$SUPPORT/pva
@@ -11,7 +11,7 @@ INSTALL_DIR=$SUPPORT/pva
 if [ ! -e "$INSTALL_DIR/built" ]
 then
     mkdir -p $BUILD_DIR
-    download_and_extract "https://github.com/epics-base/bundleCPP/releases/download/${V4}/EPICS-CPP-${V4}.tar.gz" \
+    download_and_extract "https://github.com/epics-base/bundleCPP/releases/download/${PVA}/EPICS-CPP-${PVA}.tar.gz" \
         $BUILD_DIR
 
     pushd $BUILD_DIR

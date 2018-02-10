@@ -50,6 +50,7 @@ ADCORE=${AREA_DETECTOR_PATH}/ADCore
 EOF
     
     if [[ ! -z "${PVA}" ]]; then 
+        find "${PVA_PATH}"
         cat >> configure/RELEASE_LIBS.local <<EOF
 PVACCESS=${PVA_PATH}
 PVDATA=${PVA_PATH}
