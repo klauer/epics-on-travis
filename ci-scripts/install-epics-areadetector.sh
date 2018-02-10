@@ -40,11 +40,25 @@ ADSIMDETECTOR=${AREA_DETECTOR_PATH}/ADSimDetector
 EPICS_BASE=$EPICS_BASE
 EOF
 
-    # RELEASE_LIBS.local (start with generated RELEASE file)
-    cp -f $RELEASE_PATH configure/RELEASE_LIBS.local
-    cat >> configure/RELEASE_LIBS.local <<EOF
-INSTALL_LOCATION_APP=${AREA_DETECTOR_PATH}
--include \$(AREA_DETECTOR)/configure/RELEASE_LIBS.local.\$(EPICS_HOST_ARCH)
+    # RELEASE_LIBS.local
+    cat > configure/RELEASE_LIBS.local <<EOF
+# INSTALL_LOCATION_APP=${AREA_DETECTOR_PATH}
+ASYN=${ASYN_PATH}
+ADSUPPORT=${AREA_DETECTOR_PATH}/ADSupport
+ADCORE=${AREA_DETECTOR_PATH}/ADCore
+EOF
+    
+    if [[ ! -z "${PVA}" ]]; then 
+        cat >> configure/RELEASE_LIBS.local <<EOF
+PVACCESS=${PVA_PATH}/pvAccess
+PVDATA=${PVA_PATH}/pvData
+PVDATABASE=${PVA_PATH}/pvDatabase
+NORMATIVETYPES=${PVA_PATH}/normativeTypes
+EOF
+    fi
+
+    cat >> configure/RELEASE_LIBS.local <<'EOF'
+-include $(AREA_DETECTOR)/configure/RELEASE_LIBS.local.$(EPICS_HOST_ARCH)
 EOF
     
     cat configure/RELEASE_LIBS.local
@@ -61,9 +75,14 @@ EOF
     cat configure/RELEASE.local
 
     # RELEASE_PRODS.local
-    echo 'include $(TOP)/configure/RELEASE_LIBS.local' > configure/RELEASE_PRODS.local
-    cat $RELEASE_PATH >> configure/RELEASE_PRODS.local
-    echo '-include $(TOP)/configure/RELEASE_PRODS.local.$(EPICS_HOST_ARCH)' >> configure/RELEASE_PRODS.local
+    cat > configure/RELEASE_PRODS.local <<EOF
+    include \$(TOP)/configure/RELEASE_LIBS.local
+AUTOSAVE=${AUTOSAVE_PATH}
+BUSY=${BUSY_PATH}
+CALC=${CALC_PATH}
+SNCSEQ=${SNCSEQ_PATH}
+SSCAN=${SSCAN_PATH}
+EOF
 
     cat configure/RELEASE_PRODS.local
 
@@ -87,7 +106,7 @@ SZIP_EXTERNAL=NO
 WITH_ZLIB=YES
 ZLIB_EXTERNAL=NO
 HOST_OPT=NO
-WITH_PVA=NO
+WITH_PVA=${WITH_PVA}
 EOF
 
     # Install ADSupport
@@ -95,10 +114,11 @@ EOF
         git clone --depth=1 --branch=master https://github.com/areaDetector/ADSupport.git
     fi
 
-    # RELEASE.arch.Common
+    # ADSupport/RELEASE.arch.Common
     echo "EPICS_BASE=$EPICS_BASE" > ADSupport/configure/RELEASE.$EPICS_HOST_ARCH.Common
 
     # Copy the same config site file generated above for ADSupport
+    # ADSupport/CONFIG_SITE.arch.Common
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
     # make -C ADSupport
 }

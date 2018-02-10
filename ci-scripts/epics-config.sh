@@ -42,11 +42,14 @@ AREA_DETECTOR=${AREA_DETECTOR_PATH}
 EPICS_BASE=$EPICS_BASE
 EOF
 
-if [ ! -z "$V4" ]; then
-    export PVA_PATH=$SUPPORT/pva/${V4}
+if [ ! -z "$PVA" ]; then
+    export PVA_PATH=$SUPPORT/pva/${PVA}
     cat << EOF >> $RELEASE_PATH
 PVA=${PVA_PATH}
 EOF
+    export WITH_PVA=YES
+else
+    export WITH_PVA=NO
 fi
 
 echo "Created release file: ${RELEASE_PATH}"
