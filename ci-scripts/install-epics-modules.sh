@@ -10,41 +10,38 @@ source $CI_SCRIPTS/epics-config.sh
 
 # sequencer
 install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/releases/seq-${SEQ}.tar.gz" "sequencer" \
-    "$BUILD_ROOT/seq" "$SUPPORT/seq"
+    "$BUILD_ROOT/seq/${SEQ}" ${SNCSEQ_PATH}
 
 # asyn
+
+# fix_asyn() {
+#     # disable building tests
+#     sed -ie 's/^#EPICS_LIBCOM_ONLY=.*$/EPICS_LIBCOM_ONLY=YES/' configure/CONFIG_SITE
+# }
+
 install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN}.tar.gz" "asyn" \
-    "$BUILD_ROOT/asyn" "$SUPPORT/asyn"
+    "$BUILD_ROOT/asyn/${ASYN}" "${ASYN_PATH}"
 
 # busy
 install_from_github_archive "https://github.com/epics-modules/busy/archive/R${BUSY}.tar.gz" "busy" \
-    "$BUILD_ROOT/busy" "$SUPPORT/busy"
+    "$BUILD_ROOT/busy/${BUSY}" "${BUSY_PATH}"
 
 # autosave
 install_from_github_archive "https://github.com/epics-modules/autosave/archive/R${AUTOSAVE}.tar.gz" "autosave" \
-    "$BUILD_ROOT/autosave" "$SUPPORT/autosave"
+    "$BUILD_ROOT/autosave/${AUTOSAVE}" "${AUTOSAVE_PATH}"
 
 # sscan
 install_from_github_archive "https://github.com/epics-modules/sscan/archive/R${SSCAN}.tar.gz" "sscan" \
-    "$BUILD_ROOT/sscan" "$SUPPORT/sscan"
+    "$BUILD_ROOT/sscan/${SSCAN}" "${SSCAN_PATH}"
 
 # calc
 install_from_github_archive "https://github.com/epics-modules/calc/archive/R${CALC}.tar.gz" "calc" \
-    "$BUILD_ROOT/calc" "$SUPPORT/calc"
+    "$BUILD_ROOT/calc/${CALC}" "${CALC_PATH}"
 
 # motor
-motor_build_path=$BUILD_ROOT/motor
-
 fix_motor() {
-    if [ "$MOTOR" = "6-9" ]; then
-        # not building ipac support
-        sed -ie s/^.*Hytec.*$// motorApp/Makefile
-    fi
-    # aerotech requires sequencer
-    sed -ie s/^.*Aerotech.*$// motorApp/Makefile
-	if [[ "$BASE" =~ ^R3\.16.* ]]; then
-        # pretty much everything fails under 3.16 -- replace the Makefile
-        cat > motorApp/Makefile <<'EOF'
+    # only build MotorSim, SoftMotor, and MotorSrc
+    cat > motorApp/Makefile <<'EOF'
 TOP = ..
 include $(TOP)/configure/CONFIG
 DIRS += MotorSrc SoftMotorSrc MotorSimSrc Db
@@ -52,11 +49,10 @@ SoftMotorSrc_DEPEND_DIRS = MotorSrc
 MotorSimSrc_DEPEND_DIRS = MotorSrc
 include $(TOP)/configure/RULES_DIRS
 EOF
-    fi
 }
 
 install_from_github_archive "https://github.com/epics-modules/motor/archive/R${MOTOR}.tar.gz" "motor" \
-    "$motor_build_path" "$SUPPORT/motor" fix_motor
+    "$BUILD_ROOT/motor/${MOTOR}" "${MOTOR_PATH}" fix_motor
 
 
 fix_areadetector() {
@@ -84,17 +80,17 @@ EOF
     # RELEASE_PATHS.local
     cat > configure/RELEASE_PATHS.local <<EOF
 SUPPORT=$SUPPORT
-AREA_DETECTOR=$SUPPORT/areadetector
-EPICS_BASE=$EPICS_BASE
+AREA_DETECTOR=${AREA_DETECTOR_PATH}
 ADSUPPORT=$PWD/ADSupport
 ADCORE=$PWD/ADCore
 ADSIMDETECTOR=$PWD/ADSimDetector
+EPICS_BASE=$EPICS_BASE
 EOF
 
     # RELEASE_LIBS.local (start with generated RELEASE file)
     cp -f $RELEASE_PATH configure/RELEASE_LIBS.local
     cat >> configure/RELEASE_LIBS.local <<EOF
-INSTALL_LOCATION_APP=$SUPPORT/areadetector
+INSTALL_LOCATION_APP=${AREA_DETECTOR_PATH}
 -include \$(AREA_DETECTOR)/configure/RELEASE_LIBS.local.\$(EPICS_HOST_ARCH)
 EOF
     
@@ -156,5 +152,5 @@ EOF
 # areadetector
 install_from_github_archive \
     "https://github.com/areaDetector/areaDetector/archive/R${AREADETECTOR}.tar.gz" \
-    "areadetector" "$SUPPORT/areadetector" "$SUPPORT/areadetector" \
+    "areadetector" "${AREA_DETECTOR_PATH}" "${AREA_DETECTOR_PATH}" \
     fix_areadetector
