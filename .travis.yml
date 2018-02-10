@@ -24,12 +24,12 @@ script:
   - export CI_SCRIPTS="${TRAVIS_BUILD_DIR}/ci-scripts"
   - source "${CI_SCRIPTS}/epics-config.sh"
   - bash "${CI_SCRIPTS}/install-epics-base.sh"
-  - if [ ! -z "${V4}" ]; then 
-        bash "${CI_SCRIPTS}/install-epics-v4.sh"
+  - if [[ ! -z "${V4}" ]]; then 
+        bash "${CI_SCRIPTS}/install-epics-v4.sh";
     fi
   - bash "${CI_SCRIPTS}/install-epics-modules.sh"
-  - if [ ! -z "${AREADETECTOR}" ]; then
-        bash "${CI_SCRIPTS}/install-epics-areadetector.sh"
+  - if [[ ! -z "${AREADETECTOR}" ]]; then
+        bash "${CI_SCRIPTS}/install-epics-areadetector.sh";
     fi
   - bash "${CI_SCRIPTS}/install-epics-iocs.sh"
 
