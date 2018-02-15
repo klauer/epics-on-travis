@@ -25,8 +25,9 @@ fix_areadetector() {
     # RELEASE
     # Restore the original release file (installed by our bash scripts)
     cat > configure/RELEASE <<'EOF'
--include $(TOP)/../configure/RELEASE_LIBS_INCLUDE
--include $(TOP)/RELEASE.local
+include $(TOP)/configure/RELEASE_PATHS.local
+-include $(TOP)/configure/RELEASE_PATHS.local.$(EPICS_HOST_ARCH)
+include $(TOP)/configure/RELEASE_LIBS.local
 -include $(TOP)/configure/RELEASE.local
 EOF
     cat configure/RELEASE
@@ -78,7 +79,7 @@ EOF
 
     # RELEASE_PRODS.local
     cat > configure/RELEASE_PRODS.local <<EOF
-    include \$(TOP)/configure/RELEASE_LIBS.local
+    include \$(AREA_DETECTOR)/configure/RELEASE_LIBS.local
 AUTOSAVE=${AUTOSAVE_PATH}
 BUSY=${BUSY_PATH}
 CALC=${CALC_PATH}
