@@ -112,6 +112,11 @@ HOST_OPT=NO
 WITH_PVA=${WITH_PVA}
 EOF
 
+    # CONFIG_SITE.local
+    cat > configure/CONFIG_SITE.local <<EOF
+BUILD_IOCS=YES
+EOF
+
     # Install ADSupport
     if [ ! -d ADSupport/configure ]; then
         git clone --depth=1 --branch=master https://github.com/areaDetector/ADSupport.git
