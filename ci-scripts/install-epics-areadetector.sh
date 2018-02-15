@@ -145,3 +145,6 @@ install_from_github_archive \
     "https://github.com/areaDetector/areaDetector/archive/R${AREADETECTOR}.tar.gz" \
     "areadetector" "${AREA_DETECTOR_PATH}" "${AREA_DETECTOR_PATH}" \
     fix_areadetector
+
+# List all binaries produced
+find "${AREA_DETECTOR_PATH}" |grep bin
