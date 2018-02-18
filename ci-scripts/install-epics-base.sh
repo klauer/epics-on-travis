@@ -58,6 +58,15 @@ EOF
     esac
     
     make -C "$BUILD_DIR" INSTALL_LOCATION=$EPICS_BASE
+
+    # TODO: for some reason, startup scripts are not installed
+    install -d $EPICS_BASE/startup
+    cp -R $BUILD_DIR/startup/* $EPICS_BASE/startup
+
+    # Also put the useful EpicsHostArch scripts in bin
+    cp $BUILD_DIR/startup/EpicsHostArch* $EPICS_BASE/bin/$EPICS_HOST_ARCH
+    chmod +x $EPICS_BASE/bin/$EPICS_HOST_ARCH/EpicsHostArch*
+
     touch $EPICS_BASE/built
 }
 
