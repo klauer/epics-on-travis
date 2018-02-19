@@ -24,7 +24,11 @@ install_from_github_archive() {
             popd
         fi
         echo "Build $package_name"
-        make -C "$build_path" INSTALL_LOCATION=$install_path
+        if [[ "$install_path" == "$build_path" ]]; then
+            make -C "$build_path"
+        else
+            make -C "$build_path" INSTALL_LOCATION="$install_path"
+        fi
         touch $install_path/built
     else
         echo "Using cached $package_name"
