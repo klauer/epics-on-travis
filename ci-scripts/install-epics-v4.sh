@@ -15,10 +15,18 @@ then
         $BUILD_DIR
 
     pushd $BUILD_DIR
-    make EPICS_BASE=$EPICS_BASE INSTALL_LOCATION=$INSTALL_DIR
+    make -j2 EPICS_BASE=$EPICS_BASE INSTALL_LOCATION=$INSTALL_DIR
     popd
+
+    pushd $BUILD_DIR/pvaPy
+    make configure EPICS_BASE=$EPICS_BASE EPICS4_DIR=$PVA_PATH INSTALL_LOCATION=$INSTALL_DIR/pvaPy PYTHON=3
+    make install -j2
+    make clean
+    popd
+
+    cp -R $BUILD_DIR/pvaPy $INSTALL_DIR/
 
     touch $INSTALL_DIR/built
 else
-    echo "Using cached epics-base!"
+    echo "Using cached v4!"
 fi
