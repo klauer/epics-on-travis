@@ -8,6 +8,8 @@ source $CI_SCRIPTS/epics-config.sh
 echo "Starting a new tmux session '${EPICS_TMUX_SESSION}'"
 tmux new-session -d -s ${EPICS_TMUX_SESSION} /bin/bash
 
+tmux set remain-on-exit on
+
 echo "Starting the pyepics test IOC..."
 tmux new-window -n 'pyepics-test_ioc' -c "${TRAVIS_BUILD_DIR}" \
     "source setup_local_dev_env.sh; \
