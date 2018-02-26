@@ -1,9 +1,28 @@
+default_addr=127.0.0.1
+default_bcast_addr=127.255.255.255
+
+# V3 network settings
 if [ -z "$EPICS_CA_ADDR_LIST" ]; then
-    export EPICS_CA_ADDR_LIST=127.255.255.255
+    export EPICS_CA_ADDR_LIST=$default_bcast_addr
     echo "Set EPICS_CA_ADDR_LIST to $EPICS_CA_ADDR_LIST"
 fi
+
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_MAX_ARRAY_BYTES=10000000
+
+# V4 network settings
+if [ -z "$EPICS_PVA_ADDR_LIST" ]; then
+    export EPICS_PVA_ADDR_LIST=$default_bcast_addr
+    echo "Set EPICS_PVA_ADDR_LIST to $EPICS_PVA_ADDR_LIST"
+fi
+
+if [ -z "$EPICS_PVAS_INTF_LIST" ]; then
+    export EPICS_PVAS_INTF_LIST=$default_addr
+    echo "Set EPICS_PVAS_INTF_LIST to $EPICS_PVAS_INTF_LIST"
+fi
+
+export EPICS_PVA_AUTO_ADDR_LIST=NO
+# export EPICS_PVA_BROADCAST_PORT
 
 export BUILD_ROOT=$HOME/build/epics/${BASE}
 export EPICS_ROOT=$HOME/.cache/epics/${BASE}
