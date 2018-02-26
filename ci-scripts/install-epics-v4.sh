@@ -23,8 +23,13 @@ then
     make install -j2
     make clean
     popd
-
+    
+    # install pvaPy
     cp -R $BUILD_DIR/pvaPy $INSTALL_DIR/
+
+    # copy pva2pva IOCs over
+    install -d $IOCS/pva2pva
+    cp -R $BUILD_DIR/pva2pva/iocBoot $IOCS/pva2pva/
 
     touch $INSTALL_DIR/built
 else
