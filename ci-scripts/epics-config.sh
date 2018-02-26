@@ -1,4 +1,7 @@
-export EPICS_CA_ADDR_LIST=127.255.255.255
+if [ -z "$EPICS_CA_ADDR_LIST" ]; then
+    export EPICS_CA_ADDR_LIST=127.255.255.255
+    echo "Set EPICS_CA_ADDR_LIST to $EPICS_CA_ADDR_LIST"
+fi
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_MAX_ARRAY_BYTES=10000000
 
@@ -8,6 +11,7 @@ export SUPPORT=${EPICS_ROOT}/support
 export IOCS=${EPICS_ROOT}/iocs
 export EPICS_BASE=${EPICS_ROOT}/base
 export RELEASE_PATH=${SUPPORT}/RELEASE
+
 if [ -z "$EPICS_HOST_ARCH" ]; then
     export EPICS_HOST_ARCH=linux-x86_64
 fi
@@ -48,12 +52,20 @@ if [ ! -z "$PVA" ]; then
 PVA=${PVA_PATH}
 EOF
     export WITH_PVA=YES
+
+    PVA_BIN_PATH="${PVA_PATH}/bin/${EPICS_HOST_ARCH}"
+    if [[ ":$PATH:" != *":${PVA_BIN_PATH}:"* ]]; then
+        export PATH="${PVA_BIN_PATH}:${PATH}"
+        echo "${PVA_BIN_PATH} added to path"
+    fi
 else
     export WITH_PVA=NO
 fi
 
 echo "Created release file: ${RELEASE_PATH}"
+echo "------------------------"
 cat $RELEASE_PATH
+echo "------------------------"
 
 EPICS_BIN_PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}"
 
