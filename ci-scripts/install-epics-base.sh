@@ -3,12 +3,17 @@ set -e -x
 
 source $CI_SCRIPTS/epics-config.sh
 
+# EPICS V3
+
 build_epics_base() {
     BUILD_DIR=$BUILD_ROOT/base
     mkdir -p $BUILD_DIR
 
-    git clone --depth=10 --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
-    ( cd $BUILD_DIR && git checkout $BASE );
+    if [ ! -d $BUILD_DIR/configure ]; then
+        git clone --depth=1 --recursive --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
+    fi
+
+    ( cd $BUILD_DIR && git pull && git checkout $BASE );
 
     EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
 
@@ -21,6 +26,9 @@ EOF
         ;;
     *) ;;
     esac
+    
+    # Disable building with readline
+    sed -ie "s/^(COMMANDLINE_LIBRARY\s*=\s*READLINE)/# \1/" configure/os/CONFIG_SITE*
 
     make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
 
@@ -70,10 +78,53 @@ EOF
     touch $EPICS_BASE/built
 }
 
+# EPICS V7
+
+build_epics7() {
+    BUILD_DIR=$BUILD_ROOT/base
+    mkdir -p $BUILD_DIR
+
+    if [ ! -d $BUILD_DIR/configure ]; then
+        git clone --depth=1 --recursive --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
+    fi
+
+    ( cd $BUILD_DIR && git pull && git checkout $BASE );
+
+    EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
+
+    make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
+
+    if [ ! -d $EPICS_BASE/startup ]; then
+        # TODO: for some reason, startup scripts are not installed
+        install -d $EPICS_BASE/startup
+        cp -R $BUILD_DIR/startup/* $EPICS_BASE/startup
+    fi
+
+    if [ ! -f $EPICS_BASE/bin/$EPICS_HOST_ARCH/EpicsHostArch ]; then
+        # Also put the useful EpicsHostArch scripts in bin
+        cp $BUILD_DIR/startup/EpicsHostArch* $EPICS_BASE/bin/$EPICS_HOST_ARCH
+        chmod +x $EPICS_BASE/bin/$EPICS_HOST_ARCH/EpicsHostArch*
+    fi
+    
+    # copy pva2pva IOCs over
+    install -d $IOCS/pva2pva
+    cp -R $BUILD_DIR/modules/pva2pva/iocBoot $IOCS/pva2pva/
+
+    touch $EPICS_BASE/built
+
+}
+
 
 if [ ! -e "$EPICS_BASE/built" ]
 then
-    build_epics_base
+    case "$BASE" in
+    R3*)
+        build_epics_base
+        ;;
+    R7*)
+        build_epics7
+        ;;
+    esac
 else
     echo "Using cached epics-base!"
 fi

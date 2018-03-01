@@ -10,8 +10,6 @@ dist: trusty
 addons:
   apt:
     packages:
-      - libreadline6-dev
-      - libncurses5-dev
       - perl
       - re2c
       - autoconf  # pvaPy
