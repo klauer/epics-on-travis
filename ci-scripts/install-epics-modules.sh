@@ -8,6 +8,15 @@ source $CI_SCRIPTS/epics-config.sh
 [ -z "$SUPPORT" ] && echo "SUPPORT unset" && exit 1;
 [ -z "$BUILD_ROOT" ] && echo "BUILD_ROOT unset" && exit 1;
 
+update_release "sequencer" "${SNCSEQ_PATH}"
+update_release "asyn" "${ASYN_PATH}"
+update_release "busy" "${BUSY_PATH}"
+update_release "autosave" "${AUTOSAVE_PATH}"
+update_release "sscan" "${SSCAN_PATH}"
+update_release "calc" "${CALC_PATH}"
+update_release "motor" "${MOTOR_PATH}"
+update_release "area_detector" "${AREA_DETECTOR_PATH}"
+
 # sequencer
 install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/releases/seq-${SEQ}.tar.gz" "sequencer" \
     "$BUILD_ROOT/seq/${SEQ}" ${SNCSEQ_PATH}
@@ -22,13 +31,13 @@ install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/
 install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN}.tar.gz" "asyn" \
     "$BUILD_ROOT/asyn/${ASYN}" "${ASYN_PATH}"
 
-# busy
-install_from_github_archive "https://github.com/epics-modules/busy/archive/R${BUSY}.tar.gz" "busy" \
-    "$BUILD_ROOT/busy/${BUSY}" "${BUSY_PATH}"
-
 # autosave
 install_from_github_archive "https://github.com/epics-modules/autosave/archive/R${AUTOSAVE}.tar.gz" "autosave" \
     "$BUILD_ROOT/autosave/${AUTOSAVE}" "${AUTOSAVE_PATH}"
+
+# busy
+install_from_github_archive "https://github.com/epics-modules/busy/archive/R${BUSY}.tar.gz" "busy" \
+    "$BUILD_ROOT/busy/${BUSY}" "${BUSY_PATH}"
 
 # sscan
 install_from_github_archive "https://github.com/epics-modules/sscan/archive/R${SSCAN}.tar.gz" "sscan" \

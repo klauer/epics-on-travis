@@ -1,5 +1,19 @@
 #!/bin/bash
 
+update_release() {
+    local package_name=$1
+    local install_path=$2
+   
+    if [ -f "$install_path/configure/RELEASE" ]; then
+        # TODO warn if files differ
+        echo "Updating RELEASE of $package_name"
+        cmp -s $RELEASE_PATH $install_path/configure/RELEASE || \
+            echo "WARNING: RELEASE files differ; this may break builds"
+        cp -f $RELEASE_PATH $install_path/configure/RELEASE
+    fi
+}
+
+
 download_and_extract() {
     url=$1
     destination=$2
