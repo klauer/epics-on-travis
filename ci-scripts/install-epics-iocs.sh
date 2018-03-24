@@ -8,8 +8,6 @@ source $CI_SCRIPTS/epics-config.sh
 fix_pyepics() {
     # no sscan support for now
     sed -ie "s/^.*sscan.*$//" $pyepics_build_path/testiocApp/src/Makefile
-    # # it's late and sequencer+calc is giving issues...
-    # sed -ie "s/^SNCSEQ.*$//" $pyepics_build_path/configure/RELEASE
 }
 
 pyepics_build_path="${BUILD_ROOT}/pyepics-testioc"

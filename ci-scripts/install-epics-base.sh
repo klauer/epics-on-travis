@@ -28,7 +28,7 @@ EOF
     esac
     
     # Disable building with readline
-    sed -ie "s/^(COMMANDLINE_LIBRARY\s*=\s*READLINE)/# \1/" configure/os/CONFIG_SITE*
+    sed -ie "s/^COMMANDLINE_LIBRARY\s*=\s*READLINE//" configure/os/CONFIG_SITE*
 
     make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
 
@@ -85,7 +85,7 @@ build_epics7() {
     mkdir -p $BUILD_DIR
 
     if [ ! -d $BUILD_DIR/configure ]; then
-        git clone --depth=1 --recursive --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
+        git clone --depth=1 --shallow-submodules --recursive --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
     fi
 
     ( cd $BUILD_DIR && git pull && git checkout $BASE );
