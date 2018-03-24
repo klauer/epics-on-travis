@@ -45,6 +45,8 @@ export ADSIM_IOC_PIPE="${IOCS}/adsim_ioc_pipe"
 
 install -d $SUPPORT
 install -d $IOCS
+install -d $BUILD_ROOT
+install -d $EPICS_ROOT
 
 export SNCSEQ_PATH=$SUPPORT/seq/${SEQ}
 export AUTOSAVE_PATH=$SUPPORT/autosave/${AUTOSAVE}

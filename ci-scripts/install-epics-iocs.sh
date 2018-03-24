@@ -30,7 +30,7 @@ fix_motorsim() {
 motorsim_build_path="${BUILD_ROOT}/motorsim-ioc"
 
 install_from_git "https://github.com/klauer/motorsim.git" "motorsim" \
-    "$motorsim_build_path" "${MOTORSIM_IOC}" "homebrew-epics" fix_motorsim
+    "$motorsim_build_path" "${MOTORSIM_IOC}" "master" fix_motorsim
 if [ -d "$motorsim_build_path/iocBoot" ]; then
     cp -R "$motorsim_build_path/iocBoot" "${MOTORSIM_IOC}"
 fi
