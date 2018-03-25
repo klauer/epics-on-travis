@@ -28,7 +28,7 @@ EOF
     esac
     
     # Disable building with readline
-    sed -ie "s/^COMMANDLINE_LIBRARY\s*=\s*READLINE//" configure/os/CONFIG_SITE*
+    sed -ie "s/^COMMANDLINE_LIBRARY\s*=\s*READLINE//" $BUILD_DIR/configure/os/CONFIG_SITE*
 
     make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
 
