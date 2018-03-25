@@ -14,9 +14,9 @@ export EPICS_CA_ADDR_LIST=127.255.255.255
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_MAX_ARRAY_BYTES=10000000
 # example build matrix variables
-# export BASE=R7.0.1.1
+export BASE=R7.0.1.1
 # export BASE=R3.15.5
-export BASE=R3.14.12.6
+# export BASE=R3.14.12.6
 export BUSY=1-6-1
 export SEQ=2.2.5
 export ASYN=4-32
