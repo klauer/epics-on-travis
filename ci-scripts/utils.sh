@@ -3,7 +3,7 @@
 update_release() {
     local package_name=$1
     local install_path=$2
-   
+
     if [ -f "$install_path/configure/RELEASE" ]; then
         # TODO warn if files differ
         echo "Updating RELEASE of $package_name"
@@ -47,7 +47,7 @@ install_from_github_archive() {
     else
         echo "Using cached $package_name"
     fi
-    
+
 }
 
 install_from_git() {
@@ -71,7 +71,7 @@ install_from_git() {
     else
         echo "Using cached $package_name"
     fi
-    
+
 }
 
 function run_ioc() {
@@ -130,9 +130,15 @@ run_on_procserv() {
     path=$3
     executable_string=$4
     test_pv=$5
-    echo_in_foreground=$6
-    
-    procServ --name "$name" --ignore "^D^C" --coresize 0 --chdir "$path" --holdoff 1 $port $executable_string
+    log_file=$6
+
+    if [[ ! -z "$log_file" ]]; then
+        log_args="--logfile $log_file"
+    else
+        log_args=""
+    fi
+
+    procServ --name "$name" --ignore "^D^C" --coresize 0 --chdir "$path" --holdoff 1 $log_args $port $executable_string
 
     if [[ ! -z "${test_pv}" ]]; then
         until caget ${test_pv}
