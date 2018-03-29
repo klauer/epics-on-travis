@@ -37,9 +37,9 @@ script:
   - bash "${CI_SCRIPTS}/install-epics-iocs.sh"
 
   # for projects using the pyepics test IOC and motorsim IOC:
-  # - bash "${CI_SCRIPTS}/run-epics-iocs.sh"
+  # - bash "${CI_SCRIPTS}/run-epics-iocs-on-procserv.sh"
   # - pip install pyepics numpy
-  # - bash ${CI_SCRIPTS}/run-pyepics-simulator.sh
+  # - bash ${CI_SCRIPTS}/run-pyepics-simulator.sh procserv
 
   - export VERSION_TAG=${BASE}_pva${PVA}_areadetector${AREADETECTOR}_motor${MOTOR}
   - export FILE_TO_UPLOAD="${TRAVIS_BUILD_DIR}/epics-ci-${TRAVIS_TAG}_${VERSION_TAG}.tar.bz2"

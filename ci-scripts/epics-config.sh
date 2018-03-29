@@ -36,12 +36,8 @@ if [ -z "$EPICS_HOST_ARCH" ]; then
 fi
 
 export PYEPICS_IOC="$IOCS/pyepics-test-ioc"
-export PYEPICS_IOC_PIPE="${IOCS}/pyepics_ioc_pipe"
 export MOTORSIM_IOC="$IOCS/motorsim"
-export MOTORSIM_IOC_PIPE="${IOCS}/motorsim_ioc_pipe"
 export ADSIM_IOC="$AREA_DETECTOR_PATH/ADSimDetector/iocs/simDetectorIOC/"
-
-export ADSIM_IOC_PIPE="${IOCS}/adsim_ioc_pipe"
 
 install -d $SUPPORT
 install -d $IOCS
