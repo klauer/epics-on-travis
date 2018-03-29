@@ -9,7 +9,7 @@ if [ "$1" == "" ]; then
     sleep 1
 elif [ "$1" == "procserv" ]; then
     run_on_procserv 19999 "pyepics_simulator" "${PYEPICS_IOC}" \
-        "$(which python) simulator.py" ""
+        "$(which python) simulator.py" "Py:ao1" "/dev/stderr"
 
     echo "Running pyepics simulator program in procServ..."
     sleep 1
