@@ -16,6 +16,7 @@ addons:
       - re2c
       - autoconf  # pvaPy
       - libboost-all-dev  # pvaPy
+      - procserv  # optional, used by ci-scripts/run-epics-iocs-on-procserv.sh
 
 cache:
   directories:

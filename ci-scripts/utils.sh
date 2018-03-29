@@ -122,3 +122,23 @@ function run_ioc() {
       sleep 5.0
     done
 }
+
+
+run_on_procserv() {
+    port=$1
+    name=$2
+    path=$3
+    executable_string=$4
+    test_pv=$5
+    echo_in_foreground=$6
+    
+    procServ --name="$name" --port=$port --ignore="^D^C" --coresize=0 --chdir="$path" $executable_string
+
+    if [[ ! -z "${test_pv}" ]]; then
+        until caget ${test_pv}
+        do
+            echo "Waiting for ${IOC_NAME} to start..."
+            sleep 1.0
+        done
+    fi
+}
