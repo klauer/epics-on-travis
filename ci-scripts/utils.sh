@@ -132,7 +132,7 @@ run_on_procserv() {
     test_pv=$5
     echo_in_foreground=$6
     
-    procServ --name="$name" --port=$port --ignore="^D^C" --coresize=0 --chdir="$path" $executable_string
+    procServ --name "$name" --port $port --ignore "^D^C" --coresize 0 --chdir "$path" --holdoff 1 $executable_string
 
     if [[ ! -z "${test_pv}" ]]; then
         until caget ${test_pv}
