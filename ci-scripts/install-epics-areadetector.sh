@@ -79,7 +79,8 @@ EOF
 
     # RELEASE_PRODS.local
     cat > configure/RELEASE_PRODS.local <<EOF
-    include \$(AREA_DETECTOR)/configure/RELEASE_LIBS.local
+AREA_DETECTOR=${AREA_DETECTOR_PATH}
+include \$(AREA_DETECTOR)/configure/RELEASE_LIBS.local
 AUTOSAVE=${AUTOSAVE_PATH}
 BUSY=${BUSY_PATH}
 CALC=${CALC_PATH}
