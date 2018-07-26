@@ -24,7 +24,7 @@ export CALC=3-7
 export MOTOR=6-10
 export AUTOSAVE=5-9
 export SSCAN=2-11-1
-export AREADETECTOR=3-2
+export AREADETECTOR=3-3-2
 
 if [[ "$BASE" == R3.14* ]]; then
     export PVA=

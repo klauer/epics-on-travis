@@ -31,7 +31,7 @@ include $(TOP)/configure/RELEASE_LIBS.local
 -include $(TOP)/configure/RELEASE.local
 EOF
     cat configure/RELEASE
-    
+
     # RELEASE_PATHS.local
     cat > configure/RELEASE_PATHS.local <<EOF
 SUPPORT=$SUPPORT
@@ -39,7 +39,6 @@ AREA_DETECTOR=${AREA_DETECTOR_PATH}
 ADSUPPORT=${AREA_DETECTOR_PATH}/ADSupport
 ADCORE=${AREA_DETECTOR_PATH}/ADCore
 # ADSIMDETECTOR=${AREA_DETECTOR_PATH}/ADSimDetector # should not be here
-EPICS_BASE=$EPICS_BASE
 EOF
 
     # RELEASE_LIBS.local
@@ -48,9 +47,10 @@ EOF
 ASYN=${ASYN_PATH}
 ADSUPPORT=${AREA_DETECTOR_PATH}/ADSupport
 ADCORE=${AREA_DETECTOR_PATH}/ADCore
+EPICS_BASE=$EPICS_BASE
 EOF
-    
-    if [[ ! -z "${PVA}" ]]; then 
+
+    if [[ ! -z "${PVA}" ]]; then
         find "${PVA_PATH}"
         cat >> configure/RELEASE_LIBS.local <<EOF
 PVACCESS=${PVA_PATH}
@@ -63,9 +63,9 @@ EOF
     cat >> configure/RELEASE_LIBS.local <<'EOF'
 -include $(AREA_DETECTOR)/configure/RELEASE_LIBS.local.$(EPICS_HOST_ARCH)
 EOF
-    
+
     cat configure/RELEASE_LIBS.local
-    
+
     # RELEASE.local
     cat > configure/RELEASE.local <<EOF
 AREA_DETECTOR=${AREA_DETECTOR_PATH}
