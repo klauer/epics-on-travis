@@ -14,11 +14,11 @@ fix_areadetector() {
         download_and_extract "https://github.com/areaDetector/ADCore/archive/R${AREADETECTOR_VER}.tar.gz" ADCore
     fi
 
-    # TODO: hard-coded ADSimDetector 2.7
+    # TODO: hard-coded ADSimDetector 2.8
     if [ ! -d ADSimDetector/configure ]; then
-        download_and_extract "https://github.com/areaDetector/ADSimDetector/archive/R2-7.tar.gz" ADSimDetector
+        download_and_extract "https://github.com/areaDetector/ADSimDetector/archive/R2-8.tar.gz" ADSimDetector
     fi
-    
+
     chmod a+rw configure/*
     chmod a-w configure/CONFIG_SITE
 

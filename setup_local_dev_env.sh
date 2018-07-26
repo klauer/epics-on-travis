@@ -27,7 +27,7 @@ fi
 
 if [ -z "$TRAVIS_BUILD_DIR" ]; then
     export TRAVIS_BUILD_DIR=${CI_TOP}
-fi 
+fi
 
 export CI_SCRIPTS=${CI_TOP}/ci-scripts
 source ${CI_SCRIPTS}/epics-config.sh
