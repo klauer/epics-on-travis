@@ -129,6 +129,8 @@ EOF
     # Copy the same config site file generated above for ADSupport
     # ADSupport/configure/CONFIG_SITE.arch.Common
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
+    cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADCore/configure
+    cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSimDetector/configure
     # make -C ADSupport
 }
 
