@@ -142,3 +142,4 @@ install_from_github_archive \
 
 # List all binaries produced
 find "${AREA_DETECTOR_PATH}" |grep bin
+cp "${AREA_DETECTOR_PATH}"/ADCore/iocBoot/EXAMPLE_commonPlugins.cmd "${AREA_DETECTOR_PATH}"/ADCore/iocBoot/commonPlugins.cmd
