@@ -41,13 +41,13 @@ do
   echo "Waiting for motorsim IOC to start..."
   sleep 0.5
 done
- 
-until caget 13SIM1:image1:PluginType_RBV
+
+until caget 13SIM1:HDF1:PluginType_RBV
 do
   echo "Waiting for ADSim IOC to start..."
   sleep 0.5
 done
- 
+
 echo "All IOCs are running in tmux!"
 
 echo "Running pyepics simulator program..."
