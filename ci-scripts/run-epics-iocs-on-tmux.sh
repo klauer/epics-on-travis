@@ -4,6 +4,7 @@ set -e -x
 export EPICS_TMUX_SESSION=IOCs
 
 source $CI_SCRIPTS/epics-config.sh
+tmux kill-session -t ${EPICS_TMUX_SESSION} || true
 
 echo "Starting a new tmux session '${EPICS_TMUX_SESSION}'"
 tmux new-session -d -s ${EPICS_TMUX_SESSION} /bin/bash
