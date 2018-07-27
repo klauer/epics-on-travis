@@ -17,14 +17,14 @@ export EPICS_CA_MAX_ARRAY_BYTES=10000000
 export BASE=R7.0.1.1
 # export BASE=R3.15.5
 # export BASE=R3.14.12.6
-export BUSY=1-6-1
+export BUSY=1-7
 export SEQ=2.2.5
-export ASYN=4-32
+export ASYN=4-33
 export CALC=3-7
 export MOTOR=6-10
 export AUTOSAVE=5-9
 export SSCAN=2-11-1
-export AREADETECTOR=3-2
+export AREADETECTOR=3-3-2
 
 if [[ "$BASE" == R3.14* ]]; then
     export PVA=

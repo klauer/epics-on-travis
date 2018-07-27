@@ -4,6 +4,7 @@ set -e -x
 export EPICS_TMUX_SESSION=IOCs
 
 source $CI_SCRIPTS/epics-config.sh
+tmux kill-session -t ${EPICS_TMUX_SESSION} || true
 
 echo "Starting a new tmux session '${EPICS_TMUX_SESSION}'"
 tmux new-session -d -s ${EPICS_TMUX_SESSION} /bin/bash
@@ -40,13 +41,13 @@ do
   echo "Waiting for motorsim IOC to start..."
   sleep 0.5
 done
- 
-until caget 13SIM1:image1:PluginType_RBV
+
+until caget 13SIM1:HDF1:PluginType_RBV
 do
   echo "Waiting for ADSim IOC to start..."
   sleep 0.5
 done
- 
+
 echo "All IOCs are running in tmux!"
 
 echo "Running pyepics simulator program..."

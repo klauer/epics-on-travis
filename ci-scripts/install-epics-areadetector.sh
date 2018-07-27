@@ -14,11 +14,11 @@ fix_areadetector() {
         download_and_extract "https://github.com/areaDetector/ADCore/archive/R${AREADETECTOR}.tar.gz" ADCore
     fi
 
-    # TODO: hard-coded ADSimDetector 2.7
+    # TODO: hard-coded ADSimDetector 2.8
     if [ ! -d ADSimDetector/configure ]; then
-        download_and_extract "https://github.com/areaDetector/ADSimDetector/archive/R2-7.tar.gz" ADSimDetector
+        download_and_extract "https://github.com/areaDetector/ADSimDetector/archive/R2-8.tar.gz" ADSimDetector
     fi
-    
+
     chmod a+rw configure/*
     chmod a-w configure/CONFIG_SITE
 
@@ -31,7 +31,7 @@ include $(TOP)/configure/RELEASE_LIBS.local
 -include $(TOP)/configure/RELEASE.local
 EOF
     cat configure/RELEASE
-    
+
     # RELEASE_PATHS.local
     cat > configure/RELEASE_PATHS.local <<EOF
 SUPPORT=$SUPPORT
@@ -39,7 +39,6 @@ AREA_DETECTOR=${AREA_DETECTOR_PATH}
 ADSUPPORT=${AREA_DETECTOR_PATH}/ADSupport
 ADCORE=${AREA_DETECTOR_PATH}/ADCore
 # ADSIMDETECTOR=${AREA_DETECTOR_PATH}/ADSimDetector # should not be here
-EPICS_BASE=$EPICS_BASE
 EOF
 
     # RELEASE_LIBS.local
@@ -48,9 +47,10 @@ EOF
 ASYN=${ASYN_PATH}
 ADSUPPORT=${AREA_DETECTOR_PATH}/ADSupport
 ADCORE=${AREA_DETECTOR_PATH}/ADCore
+EPICS_BASE=$EPICS_BASE
 EOF
-    
-    if [[ ! -z "${PVA}" ]]; then 
+
+    if [[ ! -z "${PVA}" ]]; then
         find "${PVA_PATH}"
         cat >> configure/RELEASE_LIBS.local <<EOF
 PVACCESS=${PVA_PATH}
@@ -61,11 +61,11 @@ EOF
     fi
 
     cat >> configure/RELEASE_LIBS.local <<'EOF'
--include $(AREA_DETECTOR)/configure/RELEASE_LIBS.local.$(EPICS_HOST_ARCH)
+-include ${AREA_DETECTOR_PATH}/configure/RELEASE_LIBS.local.$(EPICS_HOST_ARCH)
 EOF
-    
+
     cat configure/RELEASE_LIBS.local
-    
+
     # RELEASE.local
     cat > configure/RELEASE.local <<EOF
 AREA_DETECTOR=${AREA_DETECTOR_PATH}
@@ -79,7 +79,7 @@ EOF
 
     # RELEASE_PRODS.local
     cat > configure/RELEASE_PRODS.local <<EOF
-    include \$(AREA_DETECTOR)/configure/RELEASE_LIBS.local
+include ${AREA_DETECTOR_PATH}/configure/RELEASE_LIBS.local
 AUTOSAVE=${AUTOSAVE_PATH}
 BUSY=${BUSY_PATH}
 CALC=${CALC_PATH}
@@ -128,6 +128,11 @@ EOF
     # Copy the same config site file generated above for ADSupport
     # ADSupport/configure/CONFIG_SITE.arch.Common
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
+    cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADCore/configure
+    cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSimDetector/configure
+    cp configure/CONFIG_SITE.local ADSupport/configure
+    cp configure/CONFIG_SITE.local ADCore/configure
+    cp configure/CONFIG_SITE.local ADSimDetector/configure
     # make -C ADSupport
 }
 
@@ -139,3 +144,4 @@ install_from_github_archive \
 
 # List all binaries produced
 find "${AREA_DETECTOR_PATH}" |grep bin
+cp "${AREA_DETECTOR_PATH}"/ADCore/iocBoot/EXAMPLE_commonPlugins.cmd "${AREA_DETECTOR_PATH}"/ADCore/iocBoot/commonPlugins.cmd
