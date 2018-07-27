@@ -110,7 +110,6 @@ WITH_ZLIB=YES
 ZLIB_EXTERNAL=NO
 HOST_OPT=NO
 WITH_PVA=${WITH_PVA}
-BUILD_IOCS=YES
 EOF
 
     # CONFIG_SITE.local
@@ -131,6 +130,9 @@ EOF
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADCore/configure
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSimDetector/configure
+    cp configure/CONFIG_SITE.local ADSupport/configure
+    cp configure/CONFIG_SITE.local ADCore/configure
+    cp configure/CONFIG_SITE.local ADSimDetector/configure
     # make -C ADSupport
 }
 
