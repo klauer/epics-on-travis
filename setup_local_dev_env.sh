@@ -25,6 +25,7 @@ export MOTOR=6-10
 export AUTOSAVE=5-9
 export SSCAN=2-11-1
 export AREADETECTOR=3-2
+export STATIC_BUILD=static
 
 if [[ "$BASE" == R3.14* ]]; then
     export PVA=
