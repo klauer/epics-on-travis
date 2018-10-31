@@ -18,7 +18,7 @@ build_epics_base() {
     EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
 
     case "$STATIC_BUILD" in
-    static)
+    YES)
         cat << EOF >> "$BUILD_DIR/configure/CONFIG_SITE"
 SHARED_LIBRARIES=NO
 STATIC_BUILD=YES

@@ -25,7 +25,7 @@ export MOTOR_VER=6-10
 export AUTOSAVE_VER=5-9
 export SSCAN_VER=2-11-1
 export AREADETECTOR_VER=3-2
-export STATIC_BUILD=static
+export STATIC_BUILD=YES
 
 if [[ "$BASE_VER" == R3.14* ]]; then
     export PVA=
