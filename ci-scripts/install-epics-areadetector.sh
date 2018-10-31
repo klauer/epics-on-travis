@@ -11,7 +11,7 @@ source $CI_SCRIPTS/epics-config.sh
 fix_areadetector() {
     # Grab additional submodule releases
     if [ ! -d ADCore/configure ]; then
-        download_and_extract "https://github.com/areaDetector/ADCore/archive/R${AREADETECTOR}.tar.gz" ADCore
+        download_and_extract "https://github.com/areaDetector/ADCore/archive/R${AREADETECTOR_VER}.tar.gz" ADCore
     fi
 
     # TODO: hard-coded ADSimDetector 2.7
@@ -134,7 +134,7 @@ EOF
 
 # areadetector
 install_from_github_archive \
-    "https://github.com/areaDetector/areaDetector/archive/R${AREADETECTOR}.tar.gz" \
+    "https://github.com/areaDetector/areaDetector/archive/R${AREADETECTOR_VER}.tar.gz" \
     "areadetector" "${AREA_DETECTOR_PATH}" "${AREA_DETECTOR_PATH}" \
     fix_areadetector
 

@@ -24,8 +24,8 @@ fi
 export EPICS_PVA_AUTO_ADDR_LIST=NO
 # export EPICS_PVA_BROADCAST_PORT
 
-export BUILD_ROOT=$HOME/build/epics/${BASE}
-export EPICS_ROOT=$HOME/.cache/epics/${BASE}
+export BUILD_ROOT=$HOME/build/epics/${BASE_VER}
+export EPICS_ROOT=$HOME/.cache/epics/${BASE_VER}
 export SUPPORT=${EPICS_ROOT}/support
 export IOCS=${EPICS_ROOT}/iocs
 export EPICS_BASE=${EPICS_ROOT}/base
@@ -44,14 +44,14 @@ install -d $IOCS
 install -d $BUILD_ROOT
 install -d $EPICS_ROOT
 
-export SNCSEQ_PATH=$SUPPORT/seq/${SEQ}
-export AUTOSAVE_PATH=$SUPPORT/autosave/${AUTOSAVE}
-export SSCAN_PATH=$SUPPORT/sscan/${SSCAN}
-export BUSY_PATH=$SUPPORT/busy/${BUSY}
-export ASYN_PATH=$SUPPORT/asyn/${ASYN}
-export CALC_PATH=$SUPPORT/calc/${CALC}
-export MOTOR_PATH=$SUPPORT/motor/${MOTOR}
-export AREA_DETECTOR_PATH=$SUPPORT/areadetector/${AREADETECTOR}
+export SNCSEQ_PATH=$SUPPORT/seq/${SEQ_VER}
+export AUTOSAVE_PATH=$SUPPORT/autosave/${AUTOSAVE_VER}
+export SSCAN_PATH=$SUPPORT/sscan/${SSCAN_VER}
+export BUSY_PATH=$SUPPORT/busy/${BUSY_VER}
+export ASYN_PATH=$SUPPORT/asyn/${ASYN_VER}
+export CALC_PATH=$SUPPORT/calc/${CALC_VER}
+export MOTOR_PATH=$SUPPORT/motor/${MOTOR_VER}
+export AREA_DETECTOR_PATH=$SUPPORT/areadetector/${AREADETECTOR_VER}
 
 cat << EOF > $RELEASE_PATH
 SUPPORT=${SUPPORT}

@@ -10,10 +10,10 @@ build_epics_base() {
     mkdir -p $BUILD_DIR
 
     if [ ! -d $BUILD_DIR/configure ]; then
-        git clone --depth=1 --recursive --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
+        git clone --depth=1 --recursive --branch ${BASE_VER} https://github.com/epics-base/epics-base.git $BUILD_DIR
     fi
 
-    ( cd $BUILD_DIR && git pull && git checkout $BASE );
+    ( cd $BUILD_DIR && git pull && git checkout $BASE_VER );
 
     EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
 
@@ -33,7 +33,7 @@ EOF
     make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
 
     # get MSI for 3.14
-    case "$BASE" in
+    case "$BASE_VER" in
     R3.14*)
         echo "Build MSI"
         MSI_BUILD_DIR=$BUILD_ROOT/msi
@@ -85,10 +85,10 @@ build_epics7() {
     mkdir -p $BUILD_DIR
 
     if [ ! -d $BUILD_DIR/configure ]; then
-        git clone --depth=1 --shallow-submodules --recursive --branch ${BASE} https://github.com/epics-base/epics-base.git $BUILD_DIR
+        git clone --depth=1 --shallow-submodules --recursive --branch ${BASE_VER} https://github.com/epics-base/epics-base.git $BUILD_DIR
     fi
 
-    ( cd $BUILD_DIR && git pull && git checkout $BASE );
+    ( cd $BUILD_DIR && git pull && git checkout $BASE_VER );
 
     EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
 
@@ -117,7 +117,7 @@ build_epics7() {
 
 if [ ! -e "$EPICS_BASE/built" ]
 then
-    case "$BASE" in
+    case "$BASE_VER" in
     R3*)
         build_epics_base
         ;;

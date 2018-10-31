@@ -18,8 +18,8 @@ update_release "motor" "${MOTOR_PATH}"
 update_release "area_detector" "${AREA_DETECTOR_PATH}"
 
 # sequencer
-install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/releases/seq-${SEQ}.tar.gz" "sequencer" \
-    "$BUILD_ROOT/seq/${SEQ}" ${SNCSEQ_PATH}
+install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/releases/seq-${SEQ_VER}.tar.gz" "sequencer" \
+    "$BUILD_ROOT/seq/${SEQ_VER}" ${SNCSEQ_PATH}
 
 # asyn
 
@@ -28,24 +28,31 @@ install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/
 #     sed -ie 's/^#EPICS_LIBCOM_ONLY=.*$/EPICS_LIBCOM_ONLY=YES/' configure/CONFIG_SITE
 # }
 
-install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN}.tar.gz" "asyn" \
-    "$BUILD_ROOT/asyn/${ASYN}" "${ASYN_PATH}"
+install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN_VER}.tar.gz" "asyn" \
+    "$BUILD_ROOT/asyn/${ASYN_VER}" "${ASYN_PATH}"
 
 # autosave
-install_from_github_archive "https://github.com/epics-modules/autosave/archive/R${AUTOSAVE}.tar.gz" "autosave" \
-    "$BUILD_ROOT/autosave/${AUTOSAVE}" "${AUTOSAVE_PATH}"
+install_from_github_archive "https://github.com/epics-modules/autosave/archive/R${AUTOSAVE_VER}.tar.gz" "autosave" \
+    "$BUILD_ROOT/autosave/${AUTOSAVE_VER}" "${AUTOSAVE_PATH}"
 
 # busy
-install_from_github_archive "https://github.com/epics-modules/busy/archive/R${BUSY}.tar.gz" "busy" \
-    "$BUILD_ROOT/busy/${BUSY}" "${BUSY_PATH}"
+install_from_github_archive "https://github.com/epics-modules/busy/archive/R${BUSY_VER}.tar.gz" "busy" \
+    "$BUILD_ROOT/busy/${BUSY_VER}" "${BUSY_PATH}"
 
 # sscan
-install_from_github_archive "https://github.com/epics-modules/sscan/archive/R${SSCAN}.tar.gz" "sscan" \
-    "$BUILD_ROOT/sscan/${SSCAN}" "${SSCAN_PATH}"
+install_from_github_archive "https://github.com/epics-modules/sscan/archive/R${SSCAN_VER}.tar.gz" "sscan" \
+    "$BUILD_ROOT/sscan/${SSCAN_VER}" "${SSCAN_PATH}"
 
 # calc
-install_from_github_archive "https://github.com/epics-modules/calc/archive/R${CALC}.tar.gz" "calc" \
-    "$BUILD_ROOT/calc/${CALC}" "${CALC_PATH}"
+fix_calc() {
+    # build calc without sncseq/sscan
+    sed -ie 's/^SNCSEQ=.*$/# no SNCSEQ/' configure/RELEASE
+    sed -ie 's/^SSCAN=.*$/# no SSCAN/' configure/RELEASE
+    sed -ie 's/^\(swaitRecord.*\)$/# \1/' calcApp/src/Makefile
+}
+
+install_from_github_archive "https://github.com/epics-modules/calc/archive/R${CALC_VER}.tar.gz" "calc" \
+    "$BUILD_ROOT/calc/${CALC_VER}" "${CALC_PATH}" fix_calc
 
 # motor
 fix_motor() {
@@ -60,5 +67,5 @@ include $(TOP)/configure/RULES_DIRS
 EOF
 }
 
-install_from_github_archive "https://github.com/epics-modules/motor/archive/R${MOTOR}.tar.gz" "motor" \
-    "$BUILD_ROOT/motor/${MOTOR}" "${MOTOR_PATH}" fix_motor
+install_from_github_archive "https://github.com/epics-modules/motor/archive/R${MOTOR_VER}.tar.gz" "motor" \
+    "$BUILD_ROOT/motor/${MOTOR_VER}" "${MOTOR_PATH}" fix_motor
