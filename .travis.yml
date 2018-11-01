@@ -47,6 +47,10 @@ script:
   # - pip install pyepics numpy
   # - bash ${CI_SCRIPTS}/run-pyepics-simulator.sh procserv
 
+  - ldd ~/epics/${BASE_VER}/iocs/pyepics-test-ioc/bin/linux-x86_64/testioc
+  - ldd ~/epics/${BASE_VER}/iocs/motorsim/bin/linux-x86_64/mtrSim
+  - ldd ~/epics/${BASE_VER}/support/areadetector/${AREADETECTOR_VER}/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64/simDetectorApp
+
   - export VERSION_TAG=${BASE_VER}_pva${PVA}_areadetector${AREADETECTOR_VER}_motor${MOTOR_VER}
   - export FILE_TO_UPLOAD="${TRAVIS_BUILD_DIR}/epics-ci-${TRAVIS_TAG}_${VERSION_TAG}.tar.bz2"
   - tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} 

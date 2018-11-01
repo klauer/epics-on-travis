@@ -2,7 +2,7 @@
 #
 # Usage: install-from-release.sh [full_package_url]
 #
-# Assumes: release is a .tar.bz2, was saved with "home/.travis/.cache" as the
+# Assumes: release is a .tar.bz2, was saved with "home/travis/epics" as the
 # initial prefix (and thus requires stripping of the first 3 components with
 # tar)
 
