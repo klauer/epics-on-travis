@@ -14,4 +14,4 @@ if [ -z "$full_package_url" ]; then
 fi
 
 echo "Downloading from: $full_package_url"
-curl -L ${full_package_url} | tar -C $HOME/.cache -xvj --strip-components=3 | grep -e "/bin/" -e "/lib/" -e "/dbd/" -e "/db/"
+curl -L ${full_package_url} | tar -C $HOME/epics -xvj --strip-components=3 | grep -e "/bin/" -e "/lib/" -e "/dbd/" -e "/db/"

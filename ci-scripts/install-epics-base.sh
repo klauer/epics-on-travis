@@ -6,7 +6,7 @@ source $CI_SCRIPTS/epics-config.sh
 # EPICS V3
 
 build_epics_base() {
-    BUILD_DIR=$BUILD_ROOT/base
+    BUILD_DIR=$EPICS_BUILD_ROOT/base
     mkdir -p $BUILD_DIR
 
     if [ ! -d $BUILD_DIR/configure ]; then
@@ -36,7 +36,7 @@ EOF
     case "$BASE_VER" in
     R3.14*)
         echo "Build MSI"
-        MSI_BUILD_DIR=$BUILD_ROOT/msi
+        MSI_BUILD_DIR=$EPICS_BUILD_ROOT/msi
         install -d "$MSI_BUILD_DIR/extensions/src"
         curl -L https://github.com/epics-extensions/extensions/archive/extensions_20120904.tar.gz | tar --strip-components 1 -C "$MSI_BUILD_DIR/extensions" -xvz
         curl https://epics.anl.gov/download/extensions/msi1-7.tar.gz | tar -C "$MSI_BUILD_DIR/extensions/src" -xvz
@@ -81,7 +81,7 @@ EOF
 # EPICS V7
 
 build_epics7() {
-    BUILD_DIR=$BUILD_ROOT/base
+    BUILD_DIR=$EPICS_BUILD_ROOT/base
     mkdir -p $BUILD_DIR
 
     if [ ! -d $BUILD_DIR/configure ]; then

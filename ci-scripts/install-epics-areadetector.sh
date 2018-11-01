@@ -6,7 +6,7 @@ source $CI_SCRIPTS/epics-config.sh
 
 [ -z "$EPICS_BASE" ] && echo "EPICS_BASE unset" && exit 1;
 [ -z "$SUPPORT" ] && echo "SUPPORT unset" && exit 1;
-[ -z "$BUILD_ROOT" ] && echo "BUILD_ROOT unset" && exit 1;
+[ -z "$EPICS_BUILD_ROOT" ] && echo "EPICS_BUILD_ROOT unset" && exit 1;
 
 fix_areadetector() {
     # Grab additional submodule releases

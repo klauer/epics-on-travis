@@ -6,7 +6,7 @@ source $CI_SCRIPTS/epics-config.sh
 
 [ -z "$EPICS_BASE" ] && echo "EPICS_BASE unset" && exit 1;
 [ -z "$SUPPORT" ] && echo "SUPPORT unset" && exit 1;
-[ -z "$BUILD_ROOT" ] && echo "BUILD_ROOT unset" && exit 1;
+[ -z "$EPICS_BUILD_ROOT" ] && echo "EPICS_BUILD_ROOT unset" && exit 1;
 
 update_release "sequencer" "${SNCSEQ_PATH}"
 update_release "asyn" "${ASYN_PATH}"
@@ -19,7 +19,7 @@ update_release "area_detector" "${AREA_DETECTOR_PATH}"
 
 # sequencer
 install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/releases/seq-${SEQ_VER}.tar.gz" "sequencer" \
-    "$BUILD_ROOT/seq/${SEQ_VER}" ${SNCSEQ_PATH}
+    "$EPICS_BUILD_ROOT/seq/${SEQ_VER}" ${SNCSEQ_PATH}
 
 # asyn
 
@@ -29,19 +29,19 @@ install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/
 # }
 
 install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN_VER}.tar.gz" "asyn" \
-    "$BUILD_ROOT/asyn/${ASYN_VER}" "${ASYN_PATH}"
+    "$EPICS_BUILD_ROOT/asyn/${ASYN_VER}" "${ASYN_PATH}"
 
 # autosave
 install_from_github_archive "https://github.com/epics-modules/autosave/archive/R${AUTOSAVE_VER}.tar.gz" "autosave" \
-    "$BUILD_ROOT/autosave/${AUTOSAVE_VER}" "${AUTOSAVE_PATH}"
+    "$EPICS_BUILD_ROOT/autosave/${AUTOSAVE_VER}" "${AUTOSAVE_PATH}"
 
 # busy
 install_from_github_archive "https://github.com/epics-modules/busy/archive/R${BUSY_VER}.tar.gz" "busy" \
-    "$BUILD_ROOT/busy/${BUSY_VER}" "${BUSY_PATH}"
+    "$EPICS_BUILD_ROOT/busy/${BUSY_VER}" "${BUSY_PATH}"
 
 # sscan
 install_from_github_archive "https://github.com/epics-modules/sscan/archive/R${SSCAN_VER}.tar.gz" "sscan" \
-    "$BUILD_ROOT/sscan/${SSCAN_VER}" "${SSCAN_PATH}"
+    "$EPICS_BUILD_ROOT/sscan/${SSCAN_VER}" "${SSCAN_PATH}"
 
 # calc
 fix_calc() {
@@ -52,7 +52,7 @@ fix_calc() {
 }
 
 install_from_github_archive "https://github.com/epics-modules/calc/archive/R${CALC_VER}.tar.gz" "calc" \
-    "$BUILD_ROOT/calc/${CALC_VER}" "${CALC_PATH}" fix_calc
+    "$EPICS_BUILD_ROOT/calc/${CALC_VER}" "${CALC_PATH}" fix_calc
 
 # motor
 fix_motor() {
@@ -68,4 +68,4 @@ EOF
 }
 
 install_from_github_archive "https://github.com/epics-modules/motor/archive/R${MOTOR_VER}.tar.gz" "motor" \
-    "$BUILD_ROOT/motor/${MOTOR_VER}" "${MOTOR_PATH}" fix_motor
+    "$EPICS_BUILD_ROOT/motor/${MOTOR_VER}" "${MOTOR_PATH}" fix_motor

@@ -27,7 +27,6 @@ addons:
 
 cache:
   directories:
-    - $HOME/.cache/epics
     - $HOME/.ccache  # https://github.com/travis-ci/travis-ci/issues/5853
 
 script:

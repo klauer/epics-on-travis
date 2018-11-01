@@ -24,8 +24,8 @@ fi
 export EPICS_PVA_AUTO_ADDR_LIST=NO
 # export EPICS_PVA_BROADCAST_PORT
 
-export BUILD_ROOT=$HOME/build/epics/${BASE_VER}
-export EPICS_ROOT=$HOME/.cache/epics/${BASE_VER}
+export EPICS_ROOT=$HOME/epics/${BASE_VER}
+export EPICS_BUILD_ROOT=$EPICS_ROOT/build
 export SUPPORT=${EPICS_ROOT}/support
 export IOCS=${EPICS_ROOT}/iocs
 export EPICS_BASE=${EPICS_ROOT}/base
@@ -41,7 +41,7 @@ export ADSIM_IOC="$AREA_DETECTOR_PATH/ADSimDetector/iocs/simDetectorIOC/"
 
 install -d $SUPPORT
 install -d $IOCS
-install -d $BUILD_ROOT
+install -d $EPICS_BUILD_ROOT
 install -d $EPICS_ROOT
 
 export SNCSEQ_PATH=$SUPPORT/seq/${SEQ_VER}

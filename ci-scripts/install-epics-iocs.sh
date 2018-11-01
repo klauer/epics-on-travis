@@ -10,7 +10,7 @@ fix_pyepics() {
     sed -ie "s/^.*sscan.*$//" $pyepics_build_path/testiocApp/src/Makefile
 }
 
-pyepics_build_path="${BUILD_ROOT}/pyepics-testioc"
+pyepics_build_path="${EPICS_BUILD_ROOT}/pyepics-testioc"
 install_from_git "https://github.com/pyepics/testioc.git" "pyepics-testioc" \
     "$pyepics_build_path" "${PYEPICS_IOC}" "master" fix_pyepics
 
@@ -27,7 +27,7 @@ fix_motorsim() {
     sed -ie "s/^ARCH.*$/ARCH=${EPICS_HOST_ARCH}/" ${motorsim_build_path}/iocBoot/ioclocalhost/Makefile
 }
 
-motorsim_build_path="${BUILD_ROOT}/motorsim-ioc"
+motorsim_build_path="${EPICS_BUILD_ROOT}/motorsim-ioc"
 
 install_from_git "https://github.com/klauer/motorsim.git" "motorsim" \
     "$motorsim_build_path" "${MOTORSIM_IOC}" "master" fix_motorsim
