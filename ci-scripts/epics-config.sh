@@ -25,7 +25,7 @@ export EPICS_PVA_AUTO_ADDR_LIST=NO
 # export EPICS_PVA_BROADCAST_PORT
 
 export EPICS_ROOT=$HOME/epics/${BASE_VER}
-export EPICS_BUILD_ROOT=$EPICS_ROOT/build
+export EPICS_BUILD_ROOT=$HOME/epics-build
 export SUPPORT=${EPICS_ROOT}/support
 export IOCS=${EPICS_ROOT}/iocs
 export EPICS_BASE=${EPICS_ROOT}/base
