@@ -32,8 +32,8 @@ install_from_github_archive() {
         install -d $build_path
         download_and_extract "$archive_url" "$build_path"
         cp $RELEASE_PATH $build_path/configure/RELEASE
-        if [ "$STATIC_BUILD" = "static" ]; then
-            echo 'STATIC_BUILD=YES' >> $build_path/configure/CONFIG_SITE
+        if [ ! -z "$STATIC_BUILD" ]; then
+            echo "STATIC_BUILD=${STATIC_BUILD}" >> $build_path/configure/CONFIG_SITE
         fi
         if [ ! -z "$fix_step" ]; then
             pushd $build_path
@@ -66,8 +66,8 @@ install_from_git() {
         install -d $build_path
         git clone --depth 5 --branch ${branch_name} ${git_url} ${build_path}
         cp $RELEASE_PATH $build_path/configure/RELEASE
-        if [ "$STATIC_BUILD" = "static" ]; then
-            echo 'STATIC_BUILD=YES' >> $build_path/configure/CONFIG_SITE
+        if [ ! -z "$STATIC_BUILD" ]; then
+            echo "STATIC_BUILD=${STATIC_BUILD}" >> $build_path/configure/CONFIG_SITE
         fi
         if [ ! -z "$fix_step" ]; then
             $fix_step;
