@@ -47,6 +47,7 @@ script:
   # - pip install pyepics numpy
   # - bash ${CI_SCRIPTS}/run-pyepics-simulator.sh procserv
 
+  - ldd ~/epics/${BASE_VER}/base/bin/linux-x86_64/caget
   - ldd ~/epics/${BASE_VER}/iocs/pyepics-test-ioc/bin/linux-x86_64/testioc
   - ldd ~/epics/${BASE_VER}/iocs/motorsim/bin/linux-x86_64/mtrSim
   - ldd ~/epics/${BASE_VER}/support/areadetector/${AREADETECTOR_VER}/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64/simDetectorApp

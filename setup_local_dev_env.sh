@@ -41,3 +41,10 @@ fi
 export TRAVIS_BUILD_DIR=${PWD}
 export CI_SCRIPTS=${PWD}/ci-scripts
 source ${CI_SCRIPTS}/epics-config.sh
+
+pushd $CI_TOP
+if [ -f "epics_on_travis_custom_env.sh" ]; then
+    echo "Sourcing epics-on-travis custom environment settings..."
+    source epics_on_travis_custom_env.sh
+fi
+popd
