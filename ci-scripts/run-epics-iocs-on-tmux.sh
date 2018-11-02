@@ -11,10 +11,8 @@ tmux new-session -d -s ${EPICS_TMUX_SESSION} /bin/bash
 tmux set remain-on-exit on
 
 echo "Starting the pyepics test IOC..."
-tmux new-window -n 'pyepics-test_ioc' -c "${CI_TOP}" \
-    "source setup_local_dev_env.sh; \
-    cd "${PYEPICS_IOC}/iocBoot/iocTestioc" && \
-    ${PYEPICS_IOC}/bin/${EPICS_HOST_ARCH}/testioc ./st.cmd"
+tmux new-window -n 'pyepics-test_ioc' -c "${CI_SCRIPTS}" \
+    "run-pyepics-test-ioc.sh"
 
 echo "Starting the motorsim IOC..."
 tmux new-window -n 'motorsim_ioc' -c "${CI_TOP}"  \
