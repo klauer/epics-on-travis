@@ -28,25 +28,8 @@ tmux new-window -n 'adsim_ioc' -c "${TRAVIS_BUILD_DIR}"  \
     cd "${ADSIM_IOC}/iocBoot/iocSimDetector" && \
     ${ADSIM_IOC}/bin/${EPICS_HOST_ARCH}/simDetectorApp ./st.cmd"
 
-# -- check that all IOCs have started --
-until caget Py:ao1
-do
-  echo "Waiting for pyepics test IOC to start..."
-  sleep 0.5
-done
+timeout --kill-after=30s bash $CI_SCRIPTS/ensure-iocs-are-running.sh
 
-until caget sim:mtr1
-do
-  echo "Waiting for motorsim IOC to start..."
-  sleep 0.5
-done
- 
-until caget 13SIM1:image1:PluginType_RBV
-do
-  echo "Waiting for ADSim IOC to start..."
-  sleep 0.5
-done
- 
 echo "All IOCs are running in tmux!"
 
 echo "Running pyepics simulator program..."
