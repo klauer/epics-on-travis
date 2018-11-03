@@ -7,7 +7,7 @@ source $CI_SCRIPTS/epics-config.sh
 
 fix_pyepics() {
     # no sscan support for now
-    sed -ie "s/^.*sscan.*$//" $pyepics_build_path/testiocApp/src/Makefile
+    sed -i -e "s/^.*sscan.*$//" $pyepics_build_path/testiocApp/src/Makefile
 }
 
 pyepics_build_path="${EPICS_BUILD_ROOT}/pyepics-testioc"
@@ -22,9 +22,9 @@ fi
 # -- motorsim --
 
 fix_motorsim() {
-    sed -ie "s/^.*asSupport.*$//" ${motorsim_build_path}/motorSimApp/src/Makefile
-    sed -ie "s/autosave //" ${motorsim_build_path}/motorSimApp/src/Makefile
-    sed -ie "s/^ARCH.*$/ARCH=${EPICS_HOST_ARCH}/" ${motorsim_build_path}/iocBoot/ioclocalhost/Makefile
+    sed -i -e "s/^.*asSupport.*$//" ${motorsim_build_path}/motorSimApp/src/Makefile
+    sed -i -e "s/autosave //" ${motorsim_build_path}/motorSimApp/src/Makefile
+    sed -i -e "s/^ARCH.*$/ARCH=${EPICS_HOST_ARCH}/" ${motorsim_build_path}/iocBoot/ioclocalhost/Makefile
 }
 
 motorsim_build_path="${EPICS_BUILD_ROOT}/motorsim-ioc"

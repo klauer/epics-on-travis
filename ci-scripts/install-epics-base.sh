@@ -28,7 +28,7 @@ EOF
     esac
     
     # Disable building with readline
-    sed -ie "s/^COMMANDLINE_LIBRARY\s*=\s*READLINE//" $BUILD_DIR/configure/os/CONFIG_SITE*
+    sed -i -e "s/^COMMANDLINE_LIBRARY\s*=\s*READLINE//" $BUILD_DIR/configure/os/CONFIG_SITE*
 
     make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
 
@@ -92,7 +92,16 @@ build_epics7() {
 
     EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
 
-    make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
+    case "$STATIC_BUILD" in
+    YES)
+        sed -i -e "s/^STATIC_BUILD=.*/STATIC_BUILD=YES/" $BUILD_DIR/configure/CONFIG_SITE
+        ;;
+    *) 
+        sed -i -e "s/^STATIC_BUILD=.*/STATIC_BUILD=NO/" $BUILD_DIR/configure/CONFIG_SITE
+        ;;
+    esac
+
+    make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE COMMANDLINE_LIBRARY=EPICS
 
     if [ ! -d $EPICS_BASE/startup ]; then
         # TODO: for some reason, startup scripts are not installed

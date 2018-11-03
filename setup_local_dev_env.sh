@@ -8,6 +8,10 @@ else
     export EPICS_HOST_ARCH=linux-x86_64
 fi
 
+if [ -z "$CI_TOP" ]; then
+    export CI_TOP=$PWD
+fi
+
 echo "EPICS_HOST_ARCH=$EPICS_HOST_ARCH"
 
 export EPICS_CA_ADDR_LIST=127.255.255.255
@@ -38,8 +42,8 @@ else
     export WITH_PVA=YES
 fi
 # mock Travis
-export TRAVIS_BUILD_DIR=${PWD}
-export CI_SCRIPTS=${PWD}/ci-scripts
+export TRAVIS_BUILD_DIR=${CI_TOP}
+export CI_SCRIPTS=${CI_TOP}/ci-scripts
 source ${CI_SCRIPTS}/epics-config.sh
 
 pushd $CI_TOP

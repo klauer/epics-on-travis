@@ -25,7 +25,7 @@ install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/
 
 # fix_asyn() {
 #     # disable building tests
-#     sed -ie 's/^#EPICS_LIBCOM_ONLY=.*$/EPICS_LIBCOM_ONLY=YES/' configure/CONFIG_SITE
+#     sed -i -e 's/^#EPICS_LIBCOM_ONLY=.*$/EPICS_LIBCOM_ONLY=YES/' configure/CONFIG_SITE
 # }
 
 install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN_VER}.tar.gz" "asyn" \
@@ -46,9 +46,9 @@ install_from_github_archive "https://github.com/epics-modules/sscan/archive/R${S
 # calc
 fix_calc() {
     # build calc without sncseq/sscan
-    sed -ie 's/^SNCSEQ=.*$/# no SNCSEQ/' configure/RELEASE
-    sed -ie 's/^SSCAN=.*$/# no SSCAN/' configure/RELEASE
-    sed -ie 's/^\(swaitRecord.*\)$/# \1/' calcApp/src/Makefile
+    sed -i -e 's/^SNCSEQ=.*$/# no SNCSEQ/' configure/RELEASE
+    sed -i -e 's/^SSCAN=.*$/# no SSCAN/' configure/RELEASE
+    sed -i -e 's/^\(swaitRecord.*\)$/# \1/' calcApp/src/Makefile
 }
 
 install_from_github_archive "https://github.com/epics-modules/calc/archive/R${CALC_VER}.tar.gz" "calc" \
