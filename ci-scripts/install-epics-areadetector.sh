@@ -130,6 +130,8 @@ EOF
     # ADSupport/configure/CONFIG_SITE.arch.Common
     cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
     # make -C ADSupport
+
+    cp -f ${AREA_DETECTOR_PATH}/ADCore/iocBoot/EXAMPLE_commonPlugins.cmd ${AREA_DETECTOR_PATH}/ADCore/iocBoot/commonPlugins.cmd
 }
 
 # areadetector
