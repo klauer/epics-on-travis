@@ -10,6 +10,7 @@ fi
 
 if [ -z "$CI_TOP" ]; then
     export CI_TOP=$PWD
+    echo "CI_TOP is now set to: $CI_TOP"
 fi
 
 echo "EPICS_HOST_ARCH=$EPICS_HOST_ARCH"
@@ -41,8 +42,11 @@ else
     export PVA=4.7.0
     export WITH_PVA=YES
 fi
-# mock Travis
-export TRAVIS_BUILD_DIR=${CI_TOP}
+
+if [ -z "$TRAVIS_BUILD_DIR" ]; then
+    export TRAVIS_BUILD_DIR=${CI_TOP}
+fi 
+
 export CI_SCRIPTS=${CI_TOP}/ci-scripts
 source ${CI_SCRIPTS}/epics-config.sh
 

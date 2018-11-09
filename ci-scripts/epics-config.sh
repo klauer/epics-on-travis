@@ -35,10 +35,6 @@ if [ -z "$EPICS_HOST_ARCH" ]; then
     export EPICS_HOST_ARCH=linux-x86_64
 fi
 
-export PYEPICS_IOC="$IOCS/pyepics-test-ioc"
-export MOTORSIM_IOC="$IOCS/motorsim"
-export ADSIM_IOC="$AREA_DETECTOR_PATH/ADSimDetector/iocs/simDetectorIOC/"
-
 install -d $SUPPORT
 install -d $IOCS
 install -d $EPICS_BUILD_ROOT
@@ -52,6 +48,10 @@ export ASYN_PATH=$SUPPORT/asyn/${ASYN_VER}
 export CALC_PATH=$SUPPORT/calc/${CALC_VER}
 export MOTOR_PATH=$SUPPORT/motor/${MOTOR_VER}
 export AREA_DETECTOR_PATH=$SUPPORT/areadetector/${AREADETECTOR_VER}
+
+export PYEPICS_IOC="$IOCS/pyepics-test-ioc"
+export MOTORSIM_IOC="$IOCS/motorsim"
+export ADSIM_IOC="$AREA_DETECTOR_PATH/ADSimDetector/iocs/simDetectorIOC/"
 
 cat << EOF > $RELEASE_PATH
 SUPPORT=${SUPPORT}
@@ -94,7 +94,13 @@ if [[ ":$PATH:" != *":${EPICS_BIN_PATH}:"* ]]; then
     echo "${EPICS_BIN_PATH} added to path"
 fi
 
-export PYEPICS_LIBCA=${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libca.so
+export EPICS_LIB_ARCH=${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/
+export PYEPICS_LIBCA=${EPICS_LIB_ARCH}/libca.so
+
+if [[ ":$LD_LIBRARY_PATH:" != *":${EPICS_LIB_ARCH}:"* ]]; then
+    export LD_LIBRARY_PATH="${EPICS_LIB_ARCH}:${LD_LIBRARY_PATH}"
+    echo "${EPICS_LIB_ARCH} added to LD_LIBRARY_PATH"
+fi
 
 # include utility functions for other scripts
 . ${CI_SCRIPTS}/utils.sh
