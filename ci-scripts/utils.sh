@@ -61,7 +61,15 @@ install_from_git() {
     if [ ! -e "$install_path/built" ]; then
         echo "Cloning $package_name from git (branch $branch_name)"
         install -d $build_path
-        git clone --depth 5 --branch ${branch_name} ${git_url} ${build_path}
+        if [ ! -e "$build_path" ]; then
+            git clone --depth 5 --branch ${branch_name} ${git_url} ${build_path}
+        else
+            pushd $build_path
+            git remote update
+            git checkout ${branch_name}
+            git merge origin/${branch_name}
+            popd
+        fi
         cp $RELEASE_PATH $build_path/configure/RELEASE
         if [ ! -z "$fix_step" ]; then
             $fix_step;
