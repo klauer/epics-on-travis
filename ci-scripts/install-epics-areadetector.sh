@@ -135,6 +135,25 @@ EOF
     cp configure/CONFIG_SITE.local ADSimDetector/configure
     # make -C ADSupport
 }
+export BUILD_IOCS=YES
+export WITH_BOOST=NO
+export BOOST_EXTERNAL=NO
+export WITH_HDF5=YES
+export HDF5_EXTERNAL=NO
+export XML2_EXTERNAL=NO
+export WITH_NETCDF=YES
+export NETCDF_EXTERNAL=NO
+export WITH_NEXUS=YES
+export NEXUS_EXTERNAL=NO
+export WITH_TIFF=YES
+export TIFF_EXTERNAL=NO
+export WITH_JPEG=YES
+export JPEG_EXTERNAL=NO
+export WITH_SZIP=YES
+export SZIP_EXTERNAL=NO
+export WITH_ZLIB=YES
+export ZLIB_EXTERNAL=NO
+export HOST_OPT=NO
 
 # areadetector
 install_from_github_archive \
