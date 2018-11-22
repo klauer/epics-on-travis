@@ -1,7 +1,11 @@
 #!/bin/bash
 
+set -x
+
 export CI_TOP=$PWD
 export CI_SCRIPTS=$CI_TOP/ci-scripts
+
+env
 
 env |grep _VER
 
