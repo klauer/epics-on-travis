@@ -1,0 +1,10 @@
+export BASE_VER=R3.14.12.6 
+export PVA=
+export BUSY_VER=1-6-1
+export SEQ_VER=2.2.5
+export ASYN_VER=4-32
+export CALC_VER=3-7
+export AUTOSAVE_VER=5-9
+export SSCAN_VER=2-11-1
+export MOTOR_VER=6-9
+export AREADETECTOR_VER=3-2

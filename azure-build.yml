@@ -1,0 +1,28 @@
+# vi: sw=2 ts=2 sts=2 expandtab
+
+parameters:
+  name: ''
+  vmImage: ''
+
+jobs:
+- job: ${{ parameters.name }}
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+  strategy:
+    matrix:
+      R3.14.12:
+        VERSION_FILE: 'R3_14_12.sh'
+      R3.15:
+        VERSION_FILE: 'R3_15.sh'
+      R3.16:
+        VERSION_FILE: 'R3_16.sh'
+      R7.0:
+        VERSION_FILE: 'R7_0.sh'
+    maxParallel: 4
+
+  steps:
+  - bash: |
+      source "versions/${VERSION_FILE}"
+      env |grep -e "_VER" -e "PVA"
+      source azure-linux.sh
+    displayName: 'Build'

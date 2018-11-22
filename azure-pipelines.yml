@@ -1,0 +1,17 @@
+# vi: sw=2 ts=2 sts=2 expandtab
+#
+jobs:
+  - template: azure-build.yml
+    parameters:
+      name: Linux
+      vmImage: 'Ubuntu 16.04'
+
+  - template: azure-build.yml
+    parameters:
+      name: Windows
+      vmImage: 'vs2017-win2016'
+
+  - template: azure-build.yml
+    parameters:
+      name: MacOS
+      vmImage: 'macOS-10.13'
