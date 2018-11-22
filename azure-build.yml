@@ -28,5 +28,9 @@ jobs:
   - bash: |
       source "versions/${VERSION_FILE}"
       env |grep -e "_VER" -e "PVA"
-      source azure-linux.sh
+      if [ "$EPICS_HOST_ARCH" =="win32-x86" ]; then
+        source azure-windows.sh
+      else
+        source azure-linux.sh
+      fi
     displayName: 'Build'
