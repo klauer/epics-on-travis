@@ -13,15 +13,15 @@ jobs:
       R3.14.12:
         VERSION_FILE: 'R3_14_12.sh'
         EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
-      R3.15:
-        VERSION_FILE: 'R3_15.sh'
-        EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
-      R3.16:
-        VERSION_FILE: 'R3_16.sh'
-        EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
-      R7.0:
-        VERSION_FILE: 'R7_0.sh'
-        EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+        # R3.15:
+        #   VERSION_FILE: 'R3_15.sh'
+        #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+        # R3.16:
+        #   VERSION_FILE: 'R3_16.sh'
+        #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+        # R7.0:
+        #   VERSION_FILE: 'R7_0.sh'
+        #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
     maxParallel: 4
 
   steps:

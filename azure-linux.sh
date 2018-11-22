@@ -7,9 +7,11 @@ export CI_SCRIPTS=$CI_TOP/ci-scripts
 
 env
 
-find "/c/Program Files (x86)/Microsoft Visual Studio" || /bin/true
 which g++ || /bin/true
 which gcc || /bin/true
+which make
+
+find "/c/Program Files (x86)/Microsoft Visual Studio" -name "*.sh" || /bin/true
 
 env |grep _VER
 
