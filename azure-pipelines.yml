@@ -5,13 +5,16 @@ jobs:
     parameters:
       name: Linux
       vmImage: 'Ubuntu 16.04'
+      epics_host_arch: 'linux-x86_64'
 
   - template: azure-build.yml
     parameters:
       name: Windows
       vmImage: 'vs2017-win2016'
+      epics_host_arch: 'win32-x86'
 
   - template: azure-build.yml
     parameters:
       name: MacOS
       vmImage: 'macOS-10.13'
+      epics_host_arch: 'darwin-x86'
