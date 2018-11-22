@@ -35,6 +35,14 @@ if [ -z "$EPICS_HOST_ARCH" ]; then
     export EPICS_HOST_ARCH=linux-x86_64
 fi
 
+if [ "$EPICS_HOST_ARCH" == "darwin-x86" ]; then
+    export STATIC_BUILD=NO
+    export SHARED_LIBRARIES=YES
+else
+    export STATIC_BUILD=YES
+    export SHARED_LIBRARIES=NO
+fi
+
 install -d $SUPPORT
 install -d $IOCS
 install -d $EPICS_BUILD_ROOT

@@ -1,0 +1,23 @@
+# vi: sw=2 ts=2 sts=2 expandtab
+variables:
+  OFFICIAL_REPO: 'klauer/epics-on-travis'
+#
+jobs:
+  - template: azure/azure-build.yml
+    parameters:
+      name: Linux
+      vmImage: 'Ubuntu 16.04'
+      epics_host_arch: 'linux-x86_64'
+
+  - template: azure/azure-build-windows.yml
+    parameters:
+      name: Windows
+      vmImage: 'vs2017-win2016'
+      epics_host_arch: 'win32-x86-static'
+      # epics_host_arch: 'win32-x86'
+
+  - template: azure/azure-build.yml
+    parameters:
+      name: MacOS
+      vmImage: 'macOS-10.13'
+      epics_host_arch: 'darwin-x86'

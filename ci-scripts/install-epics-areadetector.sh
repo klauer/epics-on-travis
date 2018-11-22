@@ -93,12 +93,12 @@ EOF
     cat > configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common <<EOF
 WITH_BOOST=NO
 BOOST_EXTERNAL=NO
-WITH_HDF5=YES
+WITH_HDF5=${WITH_HDF5}
 HDF5_EXTERNAL=NO
 XML2_EXTERNAL=NO
-WITH_NETCDF=YES
+WITH_NETCDF=${WITH_NETCDF}
 NETCDF_EXTERNAL=NO
-WITH_NEXUS=YES
+WITH_NEXUS=${WITH_HDF5}
 NEXUS_EXTERNAL=NO
 WITH_TIFF=YES
 TIFF_EXTERNAL=NO
@@ -110,8 +110,13 @@ WITH_ZLIB=YES
 ZLIB_EXTERNAL=NO
 HOST_OPT=NO
 WITH_PVA=${WITH_PVA}
-STATIC_BUILD=YES
+SHARED_LIBRARIES=${SHARED_LIBRARIES}
+STATIC_BUILD=${STATIC_BUILD}
 EOF
+
+    echo "CONFIG_SITE.$EPICS_HOST_ARCH.Common is as follows:"
+    cat configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common
+    echo ""
 
     # CONFIG_SITE.local
     cat > configure/CONFIG_SITE.local <<EOF
@@ -128,7 +133,7 @@ EOF
 
     # Copy the same config site file generated above for ADSupport
     # ADSupport/configure/CONFIG_SITE.arch.Common
-    cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
+    cp -f configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
     # make -C ADSupport
 
     cp -f ${AREA_DETECTOR_PATH}/ADCore/iocBoot/EXAMPLE_commonPlugins.cmd ${AREA_DETECTOR_PATH}/ADCore/iocBoot/commonPlugins.cmd
