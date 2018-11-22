@@ -39,6 +39,7 @@ export CI_TOP=$PWD
 export CI_SCRIPTS=$CI_TOP/ci-scripts
 
 env
+cpan -i ExtUtils::Command
 
 which g++ || /bin/true
 which gcc || /bin/true
