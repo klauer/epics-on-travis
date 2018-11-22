@@ -17,8 +17,9 @@ bash "${CI_SCRIPTS}/install-epics-base.sh"
 # fi
 # bash "${CI_SCRIPTS}/install-epics-iocs.sh"
 
+export GIT_TAG=$(git describe --tag)
 export VERSION_TAG=${BASE_VER}_pva${PVA}_areadetector${AREADETECTOR_VER}_motor${MOTOR_VER}
-export FILE_TO_UPLOAD="${HOME}/epics-ci-${EPICS_HOST_ARCH}-${TRAVIS_TAG}_${VERSION_TAG}.tar.bz2"
+export FILE_TO_UPLOAD="${HOME}/epics-ci-${EPICS_HOST_ARCH}-${GIT_TAG}_${VERSION_TAG}.tar.bz2"
 echo $FILE_TO_UPLOAD
 
 # Reduce the deployed package size a bit:

@@ -15,7 +15,9 @@ build_epics_base() {
 
     ( cd $BUILD_DIR && git pull && git checkout $BASE_VER );
 
-    EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
+    if [ -z "$EPICS_HOST_ARCH" ] then
+        EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
+    fi
 
     case "$STATIC_BUILD" in
     YES)
