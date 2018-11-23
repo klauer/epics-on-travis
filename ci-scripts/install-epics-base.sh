@@ -67,7 +67,7 @@ EOF
       ;;
     esac
     
-    make -C "$BUILD_DIR" INSTALL_LOCATION=$EPICS_BASE
+    make -C "$BUILD_DIR" -j$(expr $(nproc) + 2) INSTALL_LOCATION=$EPICS_BASE
 
     # TODO: for some reason, startup scripts are not installed
     install -d $EPICS_BASE/startup
@@ -105,7 +105,7 @@ build_epics7() {
         ;;
     esac
 
-    make -C "$BUILD_DIR" INSTALL_LOCATION=$EPICS_BASE COMMANDLINE_LIBRARY=EPICS
+-    make -C "$BUILD_DIR" -j$(expr $(nproc) + 2) INSTALL_LOCATION=$EPICS_BASE COMMANDLINE_LIBRARY=EPICS
 
     if [ ! -d $EPICS_BASE/startup ]; then
         # TODO: for some reason, startup scripts are not installed
