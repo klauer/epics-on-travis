@@ -45,35 +45,36 @@ jobs:
     displayName: 'Dependencies'
 
   - bash: |
-      source "${CI_SCRIPTS}/epics-config.sh"
+      source "ci-scripts/epics-config.sh"
       bash "${CI_SCRIPTS}/install-epics-base.sh"
     displayName: 'Install EPICS base'
 
   - bash: |
-      source "${CI_SCRIPTS}/epics-config.sh"
+      source "ci-scripts/epics-config.sh"
       if [[ ! -z "${PVA}" ]]; then
          bash "${CI_SCRIPTS}/install-epics-v4.sh";
       fi
     displayName: 'Install V4/pvAccess'
 
   - bash: |
-      source "${CI_SCRIPTS}/epics-config.sh"
+      source "ci-scripts/epics-config.sh"
       bash "${CI_SCRIPTS}/install-epics-modules.sh"
     displayName: 'Install supporting modules'
 
   - bash: |
-      source "${CI_SCRIPTS}/epics-config.sh"
+      source "ci-scripts/epics-config.sh"
       if [[ ! -z "${AREADETECTOR_VER}" ]]; then
          bash "${CI_SCRIPTS}/install-epics-areadetector.sh";
       fi
     displayName: 'Install AreaDetector'
 
   - bash: |
-      source "${CI_SCRIPTS}/epics-config.sh"
+      source "ci-scripts/epics-config.sh"
       bash "${CI_SCRIPTS}/install-epics-iocs.sh"
     displayName: 'Install IOCs'
 
   - bash: |
+      source "ci-scripts/epics-config.sh"
       export GIT_TAG=$(git describe --tag)
       export VERSION_TAG=${BASE_VER}_pva${PVA}_areadetector${AREADETECTOR_VER}_motor${MOTOR_VER}
       export FILE_TO_UPLOAD="${HOME}/epics-ci-${EPICS_HOST_ARCH}-${GIT_TAG}_${VERSION_TAG}.tar.bz2"
