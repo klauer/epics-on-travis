@@ -12,6 +12,12 @@ export CI_SCRIPTS=$CI_TOP/ci-scripts
 # tweaks
 export WITH_NETCDF=YES
 
+# go away, mingw...
+which link
+rm -f `which link`
+hash -r
+which link
+
 cl
 rc
 
