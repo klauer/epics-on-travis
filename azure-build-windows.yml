@@ -25,8 +25,11 @@ jobs:
     maxParallel: 4
 
   steps:
+  - bash: |
+      env |grep "Visual Studio"
+    displayName: 'VS Environment'
+
   - script: |
-      vcvarsall
-      "c:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+      "c:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
       bash azure-windows.sh
     displayName: 'Build'
