@@ -13,9 +13,6 @@ choco install re2c -y
 export PATH=/c/strawberry/perl/bin:$PATH
 
 which perl
-which cpan
-
-cpan -i ExtUtils::Command
 
 which g++
 which gcc
