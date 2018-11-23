@@ -40,10 +40,16 @@ export CI_SCRIPTS=$CI_TOP/ci-scripts
 
 env
 choco install strawberryperl -y
+
+export PATH=/c/strawberry/perl/bin:$PATH
+
+which perl
+which cpan
+
 cpan -i ExtUtils::Command
 
-which g++ || /bin/true
-which gcc || /bin/true
+which g++
+which gcc
 which make
 
 env |grep _VER
