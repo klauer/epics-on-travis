@@ -9,6 +9,9 @@ export CI_SCRIPTS=$CI_TOP/ci-scripts
 # tweaks
 export WITH_NETCDF=YES
 
+cl
+rc
+
 env
 choco install strawberryperl -y
 choco install re2c -y
