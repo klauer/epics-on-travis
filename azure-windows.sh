@@ -39,6 +39,7 @@ export CI_TOP=$PWD
 export CI_SCRIPTS=$CI_TOP/ci-scripts
 
 env
+choco install strawberryperl -y
 cpan -i ExtUtils::Command
 
 which g++ || /bin/true
