@@ -6,6 +6,12 @@ set -e
 export CI_TOP=$PWD
 export CI_SCRIPTS=$CI_TOP/ci-scripts
 
+if [ ! -z "$(which brew 2> /dev/null)" ]; then
+    brew install re2c
+else
+    sudo apt install re2c
+fi
+
 env |grep _VER
 
 source "${CI_SCRIPTS}/epics-config.sh"
