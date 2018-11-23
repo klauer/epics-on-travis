@@ -105,7 +105,7 @@ build_epics7() {
         ;;
     esac
 
--    make -C "$BUILD_DIR" -j$(expr $(nproc) + 2) INSTALL_LOCATION=$EPICS_BASE COMMANDLINE_LIBRARY=EPICS
+    make -C "$BUILD_DIR" -j$(expr $(nproc) + 2) INSTALL_LOCATION=$EPICS_BASE COMMANDLINE_LIBRARY=EPICS
 
     if [ ! -d $EPICS_BASE/startup ]; then
         # TODO: for some reason, startup scripts are not installed
