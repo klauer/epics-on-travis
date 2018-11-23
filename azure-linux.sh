@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -x
+set -e
 
 export CI_TOP=$PWD
 export CI_SCRIPTS=$CI_TOP/ci-scripts

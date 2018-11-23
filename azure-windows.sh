@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -x
+set -e
 
 function load_msenv() {
   local msenv="$HOME/.msenv_bash"
