@@ -8,8 +8,10 @@ export CI_SCRIPTS=$CI_TOP/ci-scripts
 
 if [ ! -z "$(which brew 2> /dev/null)" ]; then
     brew install re2c
+    export WITH_NETCDF=NO
 else
     sudo apt install re2c
+    export WITH_NETCDF=YES
 fi
 
 env |grep _VER

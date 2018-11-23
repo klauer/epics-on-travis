@@ -11,7 +11,8 @@ jobs:
     parameters:
       name: Windows
       vmImage: 'vs2017-win2016'
-      epics_host_arch: 'win32-x86'
+      epics_host_arch: 'win32-x86-mingw'
+      # epics_host_arch: 'win32-x86'
 
   - template: azure-build.yml
     parameters:
