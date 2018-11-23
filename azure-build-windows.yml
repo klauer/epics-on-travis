@@ -10,12 +10,12 @@ jobs:
     vmImage: ${{ parameters.vmImage }}
   strategy:
     matrix:
-      R3.14.12:
-        VERSION_FILE: 'R3_14_12.sh'
-        EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
-      # R3.15:
-      #   VERSION_FILE: 'R3_15.sh'
+      # R3.14.12:
+      #   VERSION_FILE: 'R3_14_12.sh'
       #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+      R3.15:
+        VERSION_FILE: 'R3_15.sh'
+        EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
       # R3.16:
       #   VERSION_FILE: 'R3_16.sh'
       #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
