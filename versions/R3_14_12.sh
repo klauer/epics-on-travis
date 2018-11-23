@@ -1,4 +1,4 @@
-export BASE_VER=R3.14.12.6 
+export BASE_VER=R3.14.12.8
 export PVA=
 export BUSY_VER=1-6-1
 export SEQ_VER=2.2.5
