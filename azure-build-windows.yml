@@ -1,0 +1,32 @@
+# vi: sw=2 ts=2 sts=2 expandtab
+
+parameters:
+  name: ''
+  vmImage: ''
+
+jobs:
+- job: ${{ parameters.name }}
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+  strategy:
+    matrix:
+      R3.14.12:
+        VERSION_FILE: 'R3_14_12.sh'
+        EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+      # R3.15:
+      #   VERSION_FILE: 'R3_15.sh'
+      #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+      # R3.16:
+      #   VERSION_FILE: 'R3_16.sh'
+      #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+      R7.0:
+        VERSION_FILE: 'R7_0.sh'
+        EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+    maxParallel: 4
+
+  steps:
+  - script: |
+      vcvarsall
+      "c:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+      bash azure-windows.sh
+    displayName: 'Build'

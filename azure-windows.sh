@@ -3,6 +3,9 @@
 set -x
 set -e
 
+source "versions/${VERSION_FILE}"
+env |grep -e "_VER" -e "PVA"
+
 export CI_TOP=$PWD
 export CI_SCRIPTS=$CI_TOP/ci-scripts
 
