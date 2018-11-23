@@ -30,6 +30,6 @@ jobs:
     displayName: 'VS Environment'
 
   - script: |
-      "c:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
+      call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
       bash azure-windows.sh
     displayName: 'Build'
