@@ -38,9 +38,15 @@ env |grep _VER
 source "${CI_SCRIPTS}/epics-config.sh"
 
 bash "${CI_SCRIPTS}/install-epics-base.sh"
+
+find /c/Users/VssAdministrator/epics/
+
 if [[ ! -z "${PVA}" ]]; then
    bash "${CI_SCRIPTS}/install-epics-v4.sh";
 fi
+
+find /c/Users/VssAdministrator/epics/
+
 bash "${CI_SCRIPTS}/install-epics-modules.sh"
 if [[ ! -z "${AREADETECTOR_VER}" ]]; then
    bash "${CI_SCRIPTS}/install-epics-areadetector.sh";

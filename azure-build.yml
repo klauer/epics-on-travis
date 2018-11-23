@@ -26,14 +26,16 @@ jobs:
 
   steps:
   - bash: |
-      if [ ! -z "$(which brew 2> /dev/null)" ]; then
-          brew install re2c
-          export WITH_NETCDF=NO
-      else
-          sudo apt install re2c libreadline-dev
-          export WITH_NETCDF=YES
-      fi
+      brew install re2c
+    displayName: 'Install dependencies (Darwin/OSX)'
+    condition: eq(variables['agent.os'], 'Darwin')
 
+  - bash: |
+      sudo apt install re2c libreadline-dev
+    displayName: 'Install dependencies (Linux)'
+    condition: eq(variables['agent.os'], 'Linux')
+
+  - bash: |
       CI_TOP=$PWD
 
       pushd ci-scripts
@@ -65,10 +67,25 @@ jobs:
 
   - bash: |
       source "ci-scripts/epics-config.sh"
+      # problematic areaDetector stuff on OSX:
+      export WITH_NETCDF=NO
+      # hdf5: tries to link to static crt0:
+      export WITH_HDF5=NO
       if [[ ! -z "${AREADETECTOR_VER}" ]]; then
          bash "${CI_SCRIPTS}/install-epics-areadetector.sh";
       fi
-    displayName: 'Install AreaDetector'
+    displayName: 'Install AreaDetector (OSX/Darwin)'
+    condition: eq(variables['agent.os'], 'Darwin')
+
+  - bash: |
+      source "ci-scripts/epics-config.sh"
+      export WITH_NETCDF=YES
+      export WITH_HDF5=YES
+      if [[ ! -z "${AREADETECTOR_VER}" ]]; then
+         bash "${CI_SCRIPTS}/install-epics-areadetector.sh";
+      fi
+    displayName: 'Install AreaDetector (Linux)'
+    condition: eq(variables['agent.os'], 'Linux')
 
   - bash: |
       source "ci-scripts/epics-config.sh"
