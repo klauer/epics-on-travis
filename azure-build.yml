@@ -37,7 +37,7 @@ jobs:
       pushd ci-scripts
       mv epics-config.sh epics-config.sh.orig
       echo "export CI_TOP=$PWD" > epics-config.sh
-      echo "export CI_SCRIPTS=$CI_TOP/ci-scripts" >> epics-config.sh
+      echo 'export CI_SCRIPTS=$CI_TOP/ci-scripts' >> epics-config.sh
       cat "../versions/${VERSION_FILE}" >> epics-config.sh
       cat epics-config.sh.orig >> epics-config.sh
       echo "set -x -e" >> epics-config.sh
