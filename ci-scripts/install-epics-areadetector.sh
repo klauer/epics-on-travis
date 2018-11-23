@@ -113,6 +113,10 @@ WITH_PVA=${WITH_PVA}
 STATIC_BUILD=YES
 EOF
 
+    echo "CONFIG_SITE.$EPICS_HOST_ARCH.Common is as follows:"
+    cat configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common
+    echo ""
+
     # CONFIG_SITE.local
     cat > configure/CONFIG_SITE.local <<EOF
 BUILD_IOCS=YES
@@ -121,6 +125,11 @@ EOF
     # Install ADSupport
     if [ ! -d ADSupport/configure ]; then
         git clone --depth=1 --branch=master https://github.com/areaDetector/ADSupport.git
+    fi
+
+    if [ "$WITH_HDF5" == "NO" ]; then
+        rm -rf ADSupport/supportApp/hdf5*
+        sed -i -e "s/^.*hdf5.*$/# no hdf5/" ADSupport/supportApp/Makefile
     fi
 
     # ADSupport/configure/RELEASE.arch.Common
