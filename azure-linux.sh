@@ -10,7 +10,7 @@ if [ ! -z "$(which brew 2> /dev/null)" ]; then
     brew install re2c
     export WITH_NETCDF=NO
 else
-    sudo apt install re2c
+    sudo apt install re2c libreadline-dev
     export WITH_NETCDF=YES
 fi
 
