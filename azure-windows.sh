@@ -47,6 +47,8 @@ fi
 
 find /c/Users/VssAdministrator/epics/
 
+ls /c/Users/VssAdministrator/epics/${BASE_VER}/base/configure/RULES_TOP
+
 bash "${CI_SCRIPTS}/install-epics-modules.sh"
 if [[ ! -z "${AREADETECTOR_VER}" ]]; then
    bash "${CI_SCRIPTS}/install-epics-areadetector.sh";
