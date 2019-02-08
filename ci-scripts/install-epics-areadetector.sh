@@ -98,7 +98,7 @@ HDF5_EXTERNAL=NO
 XML2_EXTERNAL=NO
 WITH_NETCDF=${WITH_NETCDF}
 NETCDF_EXTERNAL=NO
-WITH_NEXUS=YES
+WITH_NEXUS=${WITH_HDF5}
 NEXUS_EXTERNAL=NO
 WITH_TIFF=YES
 TIFF_EXTERNAL=NO
@@ -110,7 +110,8 @@ WITH_ZLIB=YES
 ZLIB_EXTERNAL=NO
 HOST_OPT=NO
 WITH_PVA=${WITH_PVA}
-STATIC_BUILD=YES
+SHARED_LIBRARIES=${SHARED_LIBRARIES}
+STATIC_BUILD=${STATIC_BUILD}
 EOF
 
     echo "CONFIG_SITE.$EPICS_HOST_ARCH.Common is as follows:"
@@ -127,17 +128,12 @@ EOF
         git clone --depth=1 --branch=master https://github.com/areaDetector/ADSupport.git
     fi
 
-    if [ "$WITH_HDF5" == "NO" ]; then
-        rm -rf ADSupport/supportApp/hdf5*
-        sed -i -e "s/^.*hdf5.*$/# no hdf5/" ADSupport/supportApp/Makefile
-    fi
-
     # ADSupport/configure/RELEASE.arch.Common
     echo "EPICS_BASE=$EPICS_BASE" > ADSupport/configure/RELEASE.$EPICS_HOST_ARCH.Common
 
     # Copy the same config site file generated above for ADSupport
     # ADSupport/configure/CONFIG_SITE.arch.Common
-    cp configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
+    cp -f configure/CONFIG_SITE.$EPICS_HOST_ARCH.Common ADSupport/configure
     # make -C ADSupport
 
     cp -f ${AREA_DETECTOR_PATH}/ADCore/iocBoot/EXAMPLE_commonPlugins.cmd ${AREA_DETECTOR_PATH}/ADCore/iocBoot/commonPlugins.cmd

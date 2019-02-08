@@ -22,8 +22,8 @@ build_epics_base() {
     case "$STATIC_BUILD" in
     YES)
         cat << EOF >> "$BUILD_DIR/configure/CONFIG_SITE"
-SHARED_LIBRARIES=NO
-STATIC_BUILD=YES
+SHARED_LIBRARIES=${SHARED_LIBRARIES}
+STATIC_BUILD=${STATIC_BUILD}
 EOF
         ;;
     *) ;;
