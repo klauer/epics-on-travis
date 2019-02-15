@@ -53,6 +53,23 @@ script:
   - ldd ~/epics/${BASE_VER}/support/areadetector/${AREADETECTOR_VER}/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64/simDetectorApp
 
   - export VERSION_TAG=${BASE_VER}_pva${PVA}_areadetector${AREADETECTOR_VER}_motor${MOTOR_VER}
+  - |
+    cat <<EOF > ${EPICS_ROOT}/versions.sh
+    #!/bin/bash
+    export BASE_VER=${BASE_VER}
+    export PVA=${PVA}
+    export BUSY_VER=${BUSY_VER}
+    export SEQ_VER=${SEQ_VER}
+    export ASYN_VER=${ASYN_VER}
+    export CALC_VER=${CALC_VER}
+    export AUTOSAVE_VER=${AUTOSAVE_VER}
+    export SSCAN_VER=${SSCAN_VER}
+    export MOTOR_VER=${MOTOR_VER}
+    export AREADETECTOR_VER=${AREADETECTOR_VER}
+    export EOT_STATIC_BUILD=${STATIC_BUILD}
+    export EOT_VERSION_TAG=${VERSION_TAG}
+    EOF
+
   - export FILE_TO_UPLOAD="${TRAVIS_BUILD_DIR}/epics-ci-${TRAVIS_TAG}_${VERSION_TAG}.tar.bz2"
   - tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} 
 
