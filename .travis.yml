@@ -54,7 +54,7 @@ script:
 
   - export VERSION_TAG=${BASE_VER}_pva${PVA}_areadetector${AREADETECTOR_VER}_motor${MOTOR_VER}
   - |
-    cat <<EOF > ${EPICS_ROOT}/versions.sh
+    cat <<EOF > ${EPICS_ROOT}/../versions.sh
     #!/bin/bash
     export BASE_VER=${BASE_VER}
     export PVA=${PVA}
@@ -71,7 +71,7 @@ script:
     EOF
 
   - export FILE_TO_UPLOAD="${TRAVIS_BUILD_DIR}/epics-ci-${TRAVIS_TAG}_${VERSION_TAG}.tar.bz2"
-  - tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} 
+  - tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} ${EPICS_ROOT}/../versions.sh
 
 deploy:
     provider: releases
