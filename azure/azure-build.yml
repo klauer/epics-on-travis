@@ -97,7 +97,11 @@ jobs:
       # find $AREA_DETECTOR_PATH -type f -name "*.a" -delete
       # find $AREA_DETECTOR_PATH -type f -name "*.so" -delete
       # find $AREA_DETECTOR_PATH -type f -name "*.dylib" -delete
-      tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} --exclude=${EPICS_ROOT}/modules
+      if [ -d "$EPICS_ROOT/modules" ]; then
+        tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} --exclude=${EPICS_ROOT}/modules
+      else
+        tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT}
+      fi
       echo "##vso[task.setvariable variable=FILE_TO_UPLOAD;]$FILE_TO_UPLOAD";
     displayName: 'Package'
 
