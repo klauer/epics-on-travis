@@ -1,4 +1,4 @@
-export BASE_VER=R7.0.1.1
+export BASE_VER=R7.0.2
 export PVA=
 export BUSY_VER=1-7
 export SEQ_VER=2.2.5
@@ -8,3 +8,4 @@ export AUTOSAVE_VER=5-9
 export SSCAN_VER=2-11-1
 export MOTOR_VER=6-10
 export AREADETECTOR_VER=3-2
+export CI_DIRECTORY=.ci

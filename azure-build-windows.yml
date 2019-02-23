@@ -16,12 +16,16 @@ jobs:
       R3.15:
         VERSION_FILE: 'R3_15.sh'
         EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+        CONFIGURATION: STATIC
+        PLATFORM: x64
       # R3.16:
       #   VERSION_FILE: 'R3_16.sh'
       #   EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
       R7.0:
         VERSION_FILE: 'R7_0.sh'
         EPICS_HOST_ARCH: ${{ parameters.epics_host_arch }}
+        CONFIGURATION: STATIC
+        PLATFORM: x64
     maxParallel: 4
 
   steps:
@@ -29,17 +33,60 @@ jobs:
       env |grep "Visual Studio"
     displayName: 'VS Environment'
 
+  - bash: |
+      source versions/$(VERSION_FILE)
+      echo "##vso[task.setvariable variable=TOOLCHAIN;]2017";
+      echo "##vso[task.setvariable variable=BASE_VER;]$BASE_VER";
+      echo "##vso[task.setvariable variable=PVA;]$PVA";
+      echo "##vso[task.setvariable variable=BUSY_VER;]$BUSY_VER";
+      echo "##vso[task.setvariable variable=SEQ_VER;]$SEQ_VER";
+      echo "##vso[task.setvariable variable=ASYN_VER;]$ASYN_VER";
+      echo "##vso[task.setvariable variable=CALC_VER;]$CALC_VER";
+      echo "##vso[task.setvariable variable=AUTOSAVE_VER;]$AUTOSAVE_VER";
+      echo "##vso[task.setvariable variable=SSCAN_VER;]$SSCAN_VER";
+      echo "##vso[task.setvariable variable=MOTOR_VER;]$MOTOR_VER";
+      echo "##vso[task.setvariable variable=AREADETECTOR_VER;]$AREADETECTOR_VER";
+      echo "##vso[task.setvariable variable=CI;]$CI_DIRECTORY";
+    displayName: 'Set versions'
+
+  - bash: |
+      env
+    displayName: 'Environment'
+
   - powershell: |
-      $epics_base="C:\projects\epics-base-3.15\"
+      echo "Variables: $BASE_VER $TOOLCHAIN"
+      choco install strawberryperl -y
+      choco install re2c -y
+      Write-Host "##vso[task.setvariable variable=PATH;]C:/strawberry/perl/bin;${env:PATH}";
+    displayName: 'Dependencies'
+
+  - powershell: |
+      Set-PSDebug -Trace 2
+      $epics_base="C:\epics\base\"
       $release_path="$epics_base\configure\RELEASE"
-      $TOOLCHAIN="2017"
-      $CONFIGURATION="STATIC"
-      $PLATFORM="x64"
+      echo "Path is: $env:PATH"
       if (!(Test-Path -Path $release_path)) {
-        git clone --single-branch --branch=3.15 --depth=2 https://github.com/epics-base/epics-base $epics_base
+        git clone --single-branch --branch=$env:BASE_VER --depth=2 https://github.com/epics-base/epics-base $epics_base
         Push-Location $epics_base
-        ci/appveyor-prepare.bat
-        ci/appveyor-make.bat
+        dir $env:CI
+        bash -c 'sed -i -e "s/Community/Enterprise/g" $CI/appveyor-make.bat'
+        echo "Make contents:"
+        Invoke-Expression "type $env:CI/appveyor-make.bat"
+        echo "(end)"
+        Invoke-Expression "$env:CI/appveyor-prepare.bat"
+        Invoke-Expression "$env:CI/appveyor-make.bat"
         Pop-Location
       }
     displayName: 'Build'
+
+  - bash: |
+      export GIT_TAG=$(git describe --tag)
+      export VERSION_TAG=${BASE_VER}
+      # _pva${PVA}_areadetector${AREADETECTOR_VER}_motor${MOTOR_VER}
+
+      export EPICS_ROOT=/c/epics
+      export FILE_TO_UPLOAD="${HOME}/epics-ci-${EPICS_HOST_ARCH}-${GIT_TAG}_${VERSION_TAG}.tar.bz2"
+      echo $FILE_TO_UPLOAD
+
+      tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT}
+    displayName: 'Package'

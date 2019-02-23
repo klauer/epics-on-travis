@@ -8,3 +8,4 @@ export AUTOSAVE_VER=5-9
 export SSCAN_VER=2-11-1
 export MOTOR_VER=6-9
 export AREADETECTOR_VER=3-2
+export CI_DIRECTORY=ci
