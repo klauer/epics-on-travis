@@ -29,7 +29,17 @@ jobs:
       env |grep "Visual Studio"
     displayName: 'VS Environment'
 
-  - script: |
-      call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
-      bash azure-windows.sh
+  - powershell: |
+      $epics_base="C:\projects\epics-base-3.15\"
+      $release_path="$epics_base\configure\RELEASE"
+      $TOOLCHAIN="2017"
+      $CONFIGURATION="STATIC"
+      $PLATFORM="x64"
+      if (!(Test-Path -Path $release_path)) {
+        git clone --single-branch --branch=3.15 --depth=2 https://github.com/epics-base/epics-base $epics_base
+        Push-Location $epics_base
+        ci/appveyor-prepare.bat
+        ci/appveyor-make.bat
+        Pop-Location
+      }
     displayName: 'Build'
