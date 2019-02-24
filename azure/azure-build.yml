@@ -97,7 +97,7 @@ jobs:
       # find $AREA_DETECTOR_PATH -type f -name "*.a" -delete
       # find $AREA_DETECTOR_PATH -type f -name "*.so" -delete
       # find $AREA_DETECTOR_PATH -type f -name "*.dylib" -delete
-      #
+      
       cat <<EOF > ${EPICS_ROOT}/versions.sh
       #!/bin/bash
       export BASE_VER=${BASE_VER}
