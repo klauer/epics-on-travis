@@ -84,6 +84,22 @@ jobs:
       export VERSION_TAG=${BASE_VER}
       # _pva${PVA}_areadetector${AREADETECTOR_VER}_motor${MOTOR_VER}
 
+      cat <<EOF > /c/epics/versions.sh
+      #!/bin/bash
+      export BASE_VER=${BASE_VER}
+      export PVA=${PVA}
+      export BUSY_VER=${BUSY_VER}
+      export SEQ_VER=${SEQ_VER}
+      export ASYN_VER=${ASYN_VER}
+      export CALC_VER=${CALC_VER}
+      export AUTOSAVE_VER=${AUTOSAVE_VER}
+      export SSCAN_VER=${SSCAN_VER}
+      export MOTOR_VER=${MOTOR_VER}
+      export AREADETECTOR_VER=${AREADETECTOR_VER}
+      export EOT_STATIC_BUILD=${STATIC_BUILD}
+      export EOT_VERSION_TAG=${VERSION_TAG}
+      EOF
+
       export EPICS_ROOT=/c/epics
       export FILE_TO_UPLOAD="${HOME}/epics-ci-${EPICS_HOST_ARCH}-${GIT_TAG}_${VERSION_TAG}.tar.bz2"
       echo $FILE_TO_UPLOAD

@@ -97,6 +97,23 @@ jobs:
       # find $AREA_DETECTOR_PATH -type f -name "*.a" -delete
       # find $AREA_DETECTOR_PATH -type f -name "*.so" -delete
       # find $AREA_DETECTOR_PATH -type f -name "*.dylib" -delete
+      #
+      cat <<EOF > ${EPICS_ROOT}/versions.sh
+      #!/bin/bash
+      export BASE_VER=${BASE_VER}
+      export PVA=${PVA}
+      export BUSY_VER=${BUSY_VER}
+      export SEQ_VER=${SEQ_VER}
+      export ASYN_VER=${ASYN_VER}
+      export CALC_VER=${CALC_VER}
+      export AUTOSAVE_VER=${AUTOSAVE_VER}
+      export SSCAN_VER=${SSCAN_VER}
+      export MOTOR_VER=${MOTOR_VER}
+      export AREADETECTOR_VER=${AREADETECTOR_VER}
+      export EOT_STATIC_BUILD=${STATIC_BUILD}
+      export EOT_VERSION_TAG=${VERSION_TAG}
+      EOF
+
       if [ -d "$EPICS_ROOT/modules" ]; then
         tar cfj ${FILE_TO_UPLOAD} ${EPICS_ROOT} --exclude=${EPICS_ROOT}/modules
       else
