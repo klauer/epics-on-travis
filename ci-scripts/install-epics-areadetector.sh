@@ -147,3 +147,5 @@ install_from_github_archive \
 
 # List all binaries produced
 find "${AREA_DETECTOR_PATH}" |grep bin
+
+make -C ${AREA_DETECTOR_PATH} clean
