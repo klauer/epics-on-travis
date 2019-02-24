@@ -15,13 +15,15 @@ build_epics_base() {
 
     ( cd $BUILD_DIR && git pull && git checkout $BASE_VER );
 
-    EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
+    if [ -z "$EPICS_HOST_ARCH" ]; then
+        EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
+    fi
 
     case "$STATIC_BUILD" in
     YES)
         cat << EOF >> "$BUILD_DIR/configure/CONFIG_SITE"
-SHARED_LIBRARIES=NO
-STATIC_BUILD=YES
+SHARED_LIBRARIES=${SHARED_LIBRARIES}
+STATIC_BUILD=${STATIC_BUILD}
 EOF
         ;;
     *) ;;
@@ -30,7 +32,7 @@ EOF
     # Disable building with readline
     sed -i -e "s/^COMMANDLINE_LIBRARY\s*=\s*READLINE//" $BUILD_DIR/configure/os/CONFIG_SITE*
 
-    make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE
+    make -C "$BUILD_DIR" INSTALL_LOCATION=$EPICS_BASE
 
     # get MSI for 3.14
     case "$BASE_VER" in
@@ -65,7 +67,7 @@ EOF
       ;;
     esac
     
-    make -C "$BUILD_DIR" INSTALL_LOCATION=$EPICS_BASE
+    make -C "$BUILD_DIR" -j$(expr $(nproc) + 2) INSTALL_LOCATION=$EPICS_BASE
 
     # TODO: for some reason, startup scripts are not installed
     install -d $EPICS_BASE/startup
@@ -90,7 +92,9 @@ build_epics7() {
 
     ( cd $BUILD_DIR && git pull && git checkout $BASE_VER );
 
-    EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
+    if [ -z "$EPICS_HOST_ARCH" ]; then
+        EPICS_HOST_ARCH=`sh $BUILD_DIR/startup/EpicsHostArch`
+    fi
 
     case "$STATIC_BUILD" in
     YES)
@@ -101,7 +105,7 @@ build_epics7() {
         ;;
     esac
 
-    make -C "$BUILD_DIR" -j$(expr $(nproc) + 1) INSTALL_LOCATION=$EPICS_BASE COMMANDLINE_LIBRARY=EPICS
+    make -C "$BUILD_DIR" -j$(expr $(nproc) + 2) INSTALL_LOCATION=$EPICS_BASE COMMANDLINE_LIBRARY=EPICS
 
     if [ ! -d $EPICS_BASE/startup ]; then
         # TODO: for some reason, startup scripts are not installed
