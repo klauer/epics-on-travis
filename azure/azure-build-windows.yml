@@ -124,5 +124,7 @@ jobs:
     inputs:
       githubConnection: klauer
       repositoryName: klauer/epics-on-travis
+      action: edit
       tagSource: auto
       assets: $(FILE_TO_UPLOAD)
+      assetUploadMode: replace
