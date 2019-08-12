@@ -8,7 +8,7 @@ if [ -z "$EPICS_CA_ADDR_LIST" ]; then
 fi
 
 export EPICS_CA_AUTO_ADDR_LIST=NO
-export EPICS_CA_MAX_ARRAY_BYTES=10000000
+export EPICS_CA_MAX_ARRAY_BYTES=1000000000
 
 # V4 network settings
 if [ -z "$EPICS_PVA_ADDR_LIST" ]; then
