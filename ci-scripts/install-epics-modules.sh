@@ -23,13 +23,13 @@ install_from_github_archive "http://www-csr.bessy.de/control/SoftDist/sequencer/
 
 # asyn
 
-# fix_asyn() {
-#     # disable building tests
-#     sed -i -e 's/^#EPICS_LIBCOM_ONLY=.*$/EPICS_LIBCOM_ONLY=YES/' configure/CONFIG_SITE
-# }
+fix_asyn() {
+    # disable building tests, this is requiired to avoid tirpc / xdr related ilnking issues
+    sed -i -e 's/^#EPICS_LIBCOM_ONLY=.*$/EPICS_LIBCOM_ONLY=YES/' configure/CONFIG_SITE
+}
 
 install_from_github_archive "https://github.com/epics-modules/asyn/archive/R${ASYN_VER}.tar.gz" "asyn" \
-    "$EPICS_BUILD_ROOT/asyn/${ASYN_VER}" "${ASYN_PATH}"
+    "$EPICS_BUILD_ROOT/asyn/${ASYN_VER}" "${ASYN_PATH}" fix_asyn
 
 # autosave
 install_from_github_archive "https://github.com/epics-modules/autosave/archive/R${AUTOSAVE_VER}.tar.gz" "autosave" \
